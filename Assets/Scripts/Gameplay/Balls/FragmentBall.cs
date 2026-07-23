@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class FragmentBall : MonoBehaviour
 {
-    public event Action<FragmentBall> OnDespawn;   // 풀 반환은 소유자(SkillManager) 몫
+    public event Action<FragmentBall> OnDespawn;   // 풀 반환은 소유자(BallManager) 몫
 
     private const float Lifetime = 3f;
     private const float Speed = 8f;

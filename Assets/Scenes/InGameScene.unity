@@ -442,6 +442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e52a9ebfbc443308573227bc109c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallManager
+  fragmentPrefab: {fileID: 8712345678901234567, guid: f2a9b3c8d1e04b7fa6c5d4e3b2a19087, type: 3}
 --- !u!4 &9542192
 Transform:
   m_ObjectHideFlags: 0
@@ -10156,7 +10157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillManager
   selectionPanel: {fileID: 818010003}
-  fragmentPrefab: {fileID: 8712345678901234567, guid: f2a9b3c8d1e04b7fa6c5d4e3b2a19087, type: 3}
   initialNormalBalls: 4
 --- !u!1 &818030001
 GameObject:
@@ -10255,7 +10255,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResultPanel
   failDelay: 1
-  clearDelay: 0.3
   overlay: {fileID: 1491257494}
   titleText: {fileID: 1611629943}
   infoText: {fileID: 125384507}

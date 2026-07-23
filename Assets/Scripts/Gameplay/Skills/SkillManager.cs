@@ -7,7 +7,6 @@ using UnityEngine;
 public class SkillManager : InGameManager
 {
     [SerializeField] private SkillSelectionPanel selectionPanel;
-    [SerializeField] private GameObject fragmentPrefab;     // 클러스터 파편볼
 
     public PlayerSkills PlayerSkills => playerSkills;
     public PlayerLevel PlayerLevel => playerLevel;
@@ -27,7 +26,6 @@ public class SkillManager : InGameManager
     // 스킬 "행동"은 클래스 단위로 분리(SRP) — 여기는 디스패치만
     private Dictionary<SkillId, IOnHitEffect> onHitEffects;
     private LastMatchEffect lastMatch;
-    private UnityEngine.Pool.ObjectPool<GameObject> fragmentPool;
 
     public override void Initialize()
     {
@@ -41,18 +39,12 @@ public class SkillManager : InGameManager
         for (int i = 0; i < initialNormalBalls; i++)
             ballInventory.Add(null);   // 시작 구성: 노멀볼 N발
 
-        fragmentPool = GameManager.ObjectPool.CreateObjectPool(
-            fragmentPrefab,
-            createFunc: () => Instantiate(fragmentPrefab),
-            onGet: o => o.SetActive(true),
-            onRelease: o => o.SetActive(false));
-
         onHitEffects = new Dictionary<SkillId, IOnHitEffect>
         {
             { SkillId.FireBall, new FireBallEffect() },
             { SkillId.IceBall, new IceBallEffect(rng) },
             { SkillId.LaserBall, new LaserBallEffect(GameManager.MonsterManager) },
-            { SkillId.ClusterBall, new ClusterBallEffect(rng, SpawnFragment) },
+            { SkillId.ClusterBall, new ClusterBallEffect(rng, GameManager.BallManager.SpawnFragment) },   // 파편 스폰은 볼의 집(BallManager) 소관
             // GhostBall은 온히트 효과 없음 — 관통은 Ball의 레이어/센서 거동
         };
         lastMatch = new LastMatchEffect(GameManager.FieldManager);
@@ -154,20 +146,6 @@ public class SkillManager : InGameManager
         if (!onHitEffects.TryGetValue(ball.ActiveSkill.Value, out IOnHitEffect effect)) return;
 
         effect.Apply(monster, playerSkills.Table[ball.ActiveSkill.Value].GetLevel(ball.SkillLevel));
-    }
-
-    // 클러스터 파편 스폰/회수 — 풀 소유는 매니저, 효과 클래스는 델리게이트만 사용
-    private void SpawnFragment(Vector2 position, int damage)
-    {
-        FragmentBall fragment = fragmentPool.Get().GetComponent<FragmentBall>();
-        fragment.OnDespawn += HandleFragmentDespawn;
-        fragment.Launch(position, damage, rng);
-    }
-
-    private void HandleFragmentDespawn(FragmentBall fragment)
-    {
-        fragment.OnDespawn -= HandleFragmentDespawn;
-        fragmentPool.Release(fragment.gameObject);
     }
 
     // 판정 규칙은 DaggerCritRule(순수 코어) 소유 — 여기는 보유 패시브 값만 이어준다
