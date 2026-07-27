@@ -89,7 +89,7 @@ public class InGameHud : UIElement
         if (scoreText != null && stats != null && stats.Score != null && stats.Score.Current != lastScore)
         {
             lastScore = stats.Score.Current;
-            scoreText.text = stats.Score.Current.ToString("N0");
+            scoreText.text = $"Score: {stats.Score.Current:N0}";   // 라벨 포함 — 숫자만 있으면 뭔지 안 읽힘 (유저 2026-07-27)
         }
 
         // 레벨 게이지 = 다음 레벨까지의 킬 진행 [가정A]
