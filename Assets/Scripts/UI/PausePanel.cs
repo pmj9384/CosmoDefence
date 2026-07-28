@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 // 일시정지 패널 (UIElement) — 슬롯 채우기/이어하기 로직만. 배치는 씬 소관 (에디터-네이티브).
 // GameStop 진입/이탈 시 GameUIManager가 Show/Hide (템플릿 구독 기존재).
-// 드랍 프레임은 원작 화면 구성 재현용 모양만 — 보상은 아웃게임 영역이라 범위 외 (유저 결정).
+// 원작의 드랍 프레임은 제거 (유저 결정 2026-07-28) — 채울 드랍 시스템이 없는 빈 껍데기였고,
+// 코인 보상 정보는 결과창(ResultPanel) 몫.
 public class PausePanel : UIElement
 {
     [Header("씬 참조")]
