@@ -120,7 +120,10 @@ public class MonsterManager : InGameManager
         monster.GetComponent<BoxCollider2D>().size = new Vector2(type.width * 0.96f, type.height * 0.96f);
 
         MonsterMover mover = monster.GetComponent<MonsterMover>();
-        mover.Initialize(moveSpeed, failY);
+        // 정지선은 높이만큼 올린다 — MonsterMover는 rb.position(=중심)으로 바닥 도달을 판정하는데
+        // failY는 1×1 기준값이라, 세로로 긴 블록(사슴 1×2·보스 2×2)이 그대로 쓰면 (height-1)/2 칸만큼
+        // 판 바닥을 뚫고 내려간다. 스폰 좌표의 멀티셀 보정과 같은 식 (높이 1은 0이라 무변화).
+        mover.Initialize(moveSpeed, failY + fieldManager.CellHeight * (type.height - 1) * 0.5f);
         if (reachedBottomHandler != null) mover.OnReachedBottom += reachedBottomHandler;
         field.Add(monster);
         monster.OnDied += HandleMonsterDied;
