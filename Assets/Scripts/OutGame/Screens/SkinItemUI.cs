@@ -32,10 +32,14 @@ public class SkinItemUI : MonoBehaviour
         SkinUserData skinUserData = GameDataManager.Instance.SkinUserData;
         bool isOwned = skinUserData.IsOwned(skinId);
 
-        // 미해금은 버튼을 통째로 감춘다 — 눌러도 아무 일 없는 버튼이 터치 타겟으로 남지 않게
-        equipButton.gameObject.SetActive(isOwned);
+        // 미해금 구분은 배경 틴트로 — 버튼은 "잠금" 표시로 남긴다 (유저 결정: 상태가 글로 보이는 쪽 선호)
         cardBackground.color = isOwned ? Color.white : LockedCardTint;
-        if (!isOwned) return;
+        if (!isOwned)
+        {
+            equipButton.interactable = false;
+            equipButtonText.text = "잠금";
+            return;
+        }
 
         bool isEquipped = skinUserData.EquippedSkinId == skinId;
         equipButton.interactable = !isEquipped;
