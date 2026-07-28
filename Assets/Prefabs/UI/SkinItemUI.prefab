@@ -564,6 +564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c76c142deb5413c89b92d60a632aacf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardBackground: {fileID: 7905367605140720291}
   skinImage: {fileID: 7697847017417735382}
   skinNameText: {fileID: 8277052862616079419}
   gradeText: {fileID: 3364522583316603281}
