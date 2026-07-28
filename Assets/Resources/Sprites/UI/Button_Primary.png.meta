@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 753c169dea33a40758887c2e553f7be1
+guid: a9d94ce45982f4a83bcaffdb7c55c5e2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5646973332563177344
-    second: EdgeLine_U_0
+      213: -6979574376232386963
+    second: Button_Primary_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +52,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 140, y: 60, z: 140, w: 60}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EdgeLine_U_0
+      name: Button_Primary_0
       rect:
         serializedVersion: 2
-        x: 146
-        y: 124
-        width: 709
-        height: 476
+        x: 1
+        y: 1
+        width: 1059
+        height: 248
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 080d7784cabe1a1b0800000000000000
-      internalID: -5646973332563177344
+      spriteID: d6eff3d8512932f90800000000000000
+      internalID: -6979574376232386963
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      EdgeLine_U_0: -5646973332563177344
+      Button_Primary_0: -6979574376232386963
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
