@@ -17,7 +17,7 @@ public class SkinItemUI : MonoBehaviour
         skinId = data.SkinId;
         skinNameText.text = data.SkinName;
         gradeText.text = data.Grade;
-        skinImage.sprite = SkinSprites.Load($"Skins/{data.SkinId}");   // Addressables 전환 (이식 개조 2026-07-15)
+        SkinIconView.Apply(skinImage, data.SkinId);
 
         equipButton.onClick.AddListener(OnEquipClicked);
         Refresh();

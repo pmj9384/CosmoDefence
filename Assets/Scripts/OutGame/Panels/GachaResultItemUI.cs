@@ -12,7 +12,7 @@ public class GachaResultItemUI : MonoBehaviour
     {
 
         skinNameText.text = data.SkinName;
-        skinIcon.sprite = SkinSprites.Load($"Skins/{data.SkinId}");   // Addressables 전환 (이식 개조 2026-07-15)
+        SkinIconView.Apply(skinIcon, data.SkinId);
         newBadge.SetActive(isNew);
     }
 }
