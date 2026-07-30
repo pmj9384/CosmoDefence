@@ -23,10 +23,12 @@ public class SaveLoadSystem : PersistentMonoSingleton<SaveLoadSystem>
         CurrentSaveData = new();
     }
 
+    // TypeNameHandling.All 제거 (2026-07-30): $type으로 클래스명이 파일에 박제되면 리네임=옛 세이브 로드 실패.
+    // 구체 타입(SaveDataVC)으로 역직렬화하므로 타입 정보가 파일에 있을 필요 없음 — 버전 판별은 Version 필드 몫.
+    // 옛 파일의 $type 잔재는 Json.NET이 모르는 멤버로 무시해 그대로 호환된다 (실측 확인).
     private static JsonSerializerSettings settings = new JsonSerializerSettings
     {
         Formatting = Formatting.Indented,
-        TypeNameHandling = TypeNameHandling.All,
     };
 
     public void Save()
@@ -38,7 +40,12 @@ public class SaveLoadSystem : PersistentMonoSingleton<SaveLoadSystem>
 
         var path = Path.Combine(SavePathDirectory, CurrentSaveFileName);
         var json = JsonConvert.SerializeObject(CurrentSaveData, settings);
-        File.WriteAllText(path, json);
+        // 원자적 저장: temp에 다 쓰고 rename — 저장 도중 프로세스 킬(모바일 스와이프킬·전원)에도
+        // "완전한 옛 파일" 아니면 "완전한 새 파일"만 남는다. 직접 덮어쓰기는 반파손 파일을 만들 수 있음
+        var tmpPath = path + ".tmp";
+        File.WriteAllText(tmpPath, json);
+        if (File.Exists(path)) File.Replace(tmpPath, path, null);
+        else File.Move(tmpPath, path);
     }
 
     public void Load()
@@ -51,14 +58,30 @@ public class SaveLoadSystem : PersistentMonoSingleton<SaveLoadSystem>
             return;
         }
 
-        var json = File.ReadAllText(path);
-        var saveData = JsonConvert.DeserializeObject<SaveData>(json, settings);
-        while (saveData.Version < SaveDataVersion)
+        // 파손 파일 방어: 로드 실패가 부팅 크래시로 번지지 않게 기본값 폴백 — 깨진 파일은 재시작해도
+        // 그대로 남아 "영구 진입 불가"가 되는 게 최악이라, 새 게임으로라도 켜지는 걸 보장한다.
+        // 파일은 지우지 않고 다음 Save 때 정상본으로 덮인다
+        try
         {
-            saveData = saveData.VersionUp();
-        }
+            var json = File.ReadAllText(path);
+            var saveData = JsonConvert.DeserializeObject<SaveDataVC>(json, settings);
+            if (saveData == null) throw new JsonException("역직렬화 결과 null");
 
-        CurrentSaveData = saveData as SaveDataVC;
+            while (saveData.Version < SaveDataVersion)
+            {
+                int before = saveData.Version;
+                saveData = (SaveDataVC)saveData.VersionUp();
+                if (saveData.Version <= before)   // 이사 구현이 버전을 안 올리면 무한루프 — 시끄럽게 탈출
+                    throw new InvalidOperationException($"VersionUp이 버전을 올리지 않음 (v{before})");
+            }
+
+            CurrentSaveData = saveData;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[SaveLoad] 세이브 로드 실패 — 기본값으로 시작: {e.Message}");
+            CurrentSaveData = new SaveDataVC();
+        }
     }
 
     private void OnApplicationQuitSave()
