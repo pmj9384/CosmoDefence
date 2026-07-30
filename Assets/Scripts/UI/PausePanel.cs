@@ -30,14 +30,14 @@ public class PausePanel : UIElement
     private void OpenCombatInfo()
     {
         Hide();
-        gameUIManager.ShowUIElement(UIElementEnums.CombatInfoPanel);
+        gameUIManager.ShowUIElement<CombatInfoPanel>();
     }
 
     // 설정으로 전환 — CombatInfo와 동일 문법 (상태 GameStop 유지, 닫으면 SettingsPanel이 퍼즈를 되연다)
     private void OpenSettings()
     {
         Hide();
-        gameUIManager.ShowUIElement(UIElementEnums.SettingsPanel);
+        gameUIManager.ShowUIElement<SettingsPanel>();
     }
 
     private void GoLobby()

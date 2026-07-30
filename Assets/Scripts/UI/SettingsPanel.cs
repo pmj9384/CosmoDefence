@@ -19,7 +19,7 @@ public class SettingsPanel : UIElement
     private void Close()
     {
         Hide();
-        gameUIManager.ShowUIElement(UIElementEnums.PausePanel);
+        gameUIManager.ShowUIElement<PausePanel>();
     }
 
     public override void Show()

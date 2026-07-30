@@ -6008,6 +6008,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 916437275}
     - target: {fileID: 3956997064464416757, guid: b3591f7564f9146358a7356d9887f615, type: 3}
+      propertyPath: priceOneText
+      value: 
+      objectReference: {fileID: 1314602235}
+    - target: {fileID: 3956997064464416757, guid: b3591f7564f9146358a7356d9887f615, type: 3}
+      propertyPath: priceTenText
+      value: 
+      objectReference: {fileID: 2005869397}
+    - target: {fileID: 3956997064464416757, guid: b3591f7564f9146358a7356d9887f615, type: 3}
       propertyPath: drawOneButton
       value: 
       objectReference: {fileID: 1746489330}
