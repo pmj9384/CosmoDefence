@@ -6,6 +6,7 @@ public class Shooter : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject ballPrefab;
+    [SerializeField] private SkillIconTable iconTable;   // 볼 스프라이트 매핑 (BallShooter에 주입)
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private ShooterVisual visual;   // 조준 연출 (파츠 배치는 씬 — 미연결이어도 동작)
     [SerializeField] private Transform aimDot;       // 조준선 끝 원형 조준점 (빌더 메뉴로 생성·연결)
@@ -30,7 +31,7 @@ public class Shooter : MonoBehaviour
         context = GetComponent<PlayerContext>();   // 매니저 관문 (형제 공유) — 배선은 관문 1곳뿐
         BallManager ballManager = context.Balls;
         inputHandler = new ShooterInputHandler(transform);
-        shooter = new BallShooter(ballManager, ballPrefab, transform, shootCooldown, ballSpeed);
+        shooter = new BallShooter(ballManager, ballPrefab, transform, shootCooldown, ballSpeed, iconTable);
         aimer = new ShooterAimer(ballManager, lineRenderer, transform, maxBounces, maxDistance);
         aimer.SetAimDot(aimDot);
 
