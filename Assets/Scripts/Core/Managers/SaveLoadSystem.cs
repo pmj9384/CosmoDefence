@@ -80,6 +80,10 @@ public class SaveLoadSystem : PersistentMonoSingleton<SaveLoadSystem>
         catch (Exception e)
         {
             Debug.LogError($"[SaveLoad] 세이브 로드 실패 — 기본값으로 시작: {e.Message}");
+            // 부검 단서: 실패 시점의 파일 상태를 남긴다 — 20:27 원인미상 null 로드 1건(2026-07-30)이
+            // 정상 파일로 덮여 부검 불가였던 재발 방지. 파일 길이 0 = 빈 파일 생성 경로가 존재한다는 뜻
+            try { Debug.LogError($"[SaveLoad] 부검: 파일 {new FileInfo(path).Length} bytes, 머리 80자: {File.ReadAllText(path).Substring(0, Math.Min(80, File.ReadAllText(path).Length))}"); }
+            catch { /* 부검 실패는 침묵 — 원본 에러가 우선 */ }
             CurrentSaveData = new SaveDataVC();
         }
     }
