@@ -33,9 +33,19 @@ public class PilotSkinApplier : MonoBehaviour
 // 원격 카탈로그/비동기로 갈 때도 여기만 바뀐다 (호출부 3곳: 파츠·아이콘·장착 아이콘)
 public static class SkinSprites
 {
+    // 어드레스→스프라이트 캐시: 같은 어드레스를 화면 열 때마다 재로드하면 Release 없는
+    // Addressables 핸들이 무한 누적된다 (검수 v6). 스킨은 로컬 소량이라 앱 수명 동안 상주가 적정 —
+    // 프리로드/Release 체계는 스킨이 원격·대량화될 때 도입 (그때도 이 클래스만 바뀐다)
+    private static readonly System.Collections.Generic.Dictionary<string, Sprite> cache = new();
+
     public static Sprite Load(string address)
     {
-        try { return Addressables.LoadAssetAsync<Sprite>(address).WaitForCompletion(); }
-        catch { return null; }   // 미등록 어드레스 — 호출부가 폴백 처리
+        if (cache.TryGetValue(address, out Sprite cached)) return cached;
+
+        Sprite sprite;
+        try { sprite = Addressables.LoadAssetAsync<Sprite>(address).WaitForCompletion(); }
+        catch { sprite = null; }   // 미등록 어드레스 — 호출부가 폴백 처리
+        cache[address] = sprite;   // null도 캐시 — 없는 어드레스를 열 때마다 재시도하지 않게
+        return sprite;
     }
 }
