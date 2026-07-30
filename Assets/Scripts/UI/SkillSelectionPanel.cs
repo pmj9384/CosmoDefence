@@ -22,6 +22,7 @@ public class SkillSelectionPanel : MonoBehaviour
     [SerializeField] private GameObject[] damageBadges;   // 패시브 카드에선 숨김
     [SerializeField] private Image[] diamonds;            // 카드당 3개 flat (i*3+k) — 레벨 표시
     [SerializeField] private Image[] cardInners;          // 투톤 안판 (테두리색은 버튼 이미지)
+    [SerializeField] private SkillIconTable iconTable;     // 스킬↔아이콘 (Resources.Load 대체)
 
     // 카드 투톤 — 바깥 테두리(진함) + 안판(밝음), 액티브 팥 / 패시브 초록 (유저 확정)
     private static readonly Color ActiveEdge = new(0.22f, 0.11f, 0.11f, 0.98f);
@@ -63,7 +64,7 @@ public class SkillSelectionPanel : MonoBehaviour
             {
                 buttons[i].image.color = ActiveEdge;
                 cardInners[i].color = ActiveInner;
-                icons[i].sprite = Resources.Load<Sprite>("Sprites/Balls/Ball_Nomal_Ball");
+                icons[i].sprite = iconTable.Get(SkillId.NormalBall);
                 names[i].text = "노멀 볼";
                 descriptions[i].text = "기본 볼이 1개 늘어나 연달아 발사됩니다.";
                 damageBadges[i].SetActive(true);
@@ -81,7 +82,7 @@ public class SkillSelectionPanel : MonoBehaviour
             buttons[i].image.color = isActiveKind ? ActiveEdge : PassiveEdge;
             cardInners[i].color = isActiveKind ? ActiveInner : PassiveInner;
 
-            icons[i].sprite = Resources.Load<Sprite>(def.iconName);
+            icons[i].sprite = iconTable.Get(cards[i]);
             names[i].text = def.displayName;
             descriptions[i].text = isPlusOne ? $"{def.displayName}이 1개 늘어나 연달아 발사됩니다." : def.description;
 
@@ -115,7 +116,7 @@ public class SkillSelectionPanel : MonoBehaviour
         {
             if (i >= slots.Length) break;
             slots[i].enabled = true;
-            slots[i].sprite = Resources.Load<Sprite>(owned.Table[id].iconName);
+            slots[i].sprite = iconTable.Get(id);
             i++;
         }
         for (; i < slots.Length; i++)

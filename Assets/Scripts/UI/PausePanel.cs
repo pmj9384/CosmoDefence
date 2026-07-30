@@ -16,6 +16,7 @@ public class PausePanel : UIElement
     [SerializeField] private Button combatInfoButton;    // 전투 정보 창 열기 (#12)
     [SerializeField] private Button settingsButton;      // 볼륨 설정창 (아웃게임 이식 SettingsPanel — 씬 수동 배치)
     [SerializeField] private Button lobbyButton;         // 아웃게임(로비) 복귀 (씬 수동 배치)
+    [SerializeField] private SkillIconTable iconTable;   // 스킬↔아이콘 (Resources.Load 대체)
 
     private void Awake()
     {
@@ -71,7 +72,7 @@ public class PausePanel : UIElement
         {
             if (i >= slots.Count) break;
             slots[i].enabled = true;
-            slots[i].sprite = Resources.Load<Sprite>(skills.Table[id].iconName);
+            slots[i].sprite = iconTable.Get(id);
             i++;
         }
         for (; i < slots.Count; i++)   // 빈 슬롯 = 아이콘 숨김 (어두운 안판이 보임 — 선택창과 동일 문법)

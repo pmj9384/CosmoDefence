@@ -9708,6 +9708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Shooter
   ballPrefab: {fileID: 8527519021748018683, guid: 800242a1077844fe7a89467df2ff5d3f, type: 3}
+  iconTable: {fileID: 11400000, guid: e6a81299de85b43f087e68f3b4dba8db, type: 2}
   lineRenderer: {fileID: 818008313}
   visual: {fileID: 818009003}
   aimDot: {fileID: 1270222403}
@@ -9866,6 +9867,7 @@ MonoBehaviour:
   - {fileID: 1670785654}
   - {fileID: 1737828624}
   - {fileID: 525532266}
+  iconTable: {fileID: 11400000, guid: e6a81299de85b43f087e68f3b4dba8db, type: 2}
 --- !u!1 &818010011
 GameObject:
   m_ObjectHideFlags: 0
@@ -10197,6 +10199,7 @@ MonoBehaviour:
   combatInfoButton: {fileID: 2055126921}
   settingsButton: {fileID: 2000000014}
   lobbyButton: {fileID: 2000000023}
+  iconTable: {fileID: 11400000, guid: e6a81299de85b43f087e68f3b4dba8db, type: 2}
 --- !u!1 &818080001
 GameObject:
   m_ObjectHideFlags: 0
@@ -23005,6 +23008,7 @@ MonoBehaviour:
   - {fileID: 307580333}
   - {fileID: 874591506}
   - {fileID: 1823474447}
+  iconTable: {fileID: 11400000, guid: e6a81299de85b43f087e68f3b4dba8db, type: 2}
 --- !u!224 &1742878563
 RectTransform:
   m_ObjectHideFlags: 0

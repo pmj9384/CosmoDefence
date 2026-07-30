@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -11,14 +10,15 @@ public class BallShooter
     private readonly ObjectPool<GameObject> ballPool;
 
     private float cooldownTimer;
-    private readonly Dictionary<string, Sprite> spriteCache = new();
+    private readonly SkillIconTable iconTable;
 
-    public BallShooter(BallManager ballManager, GameObject ballPrefab, Transform origin, float shootCooldown, float ballSpeed)
+    public BallShooter(BallManager ballManager, GameObject ballPrefab, Transform origin, float shootCooldown, float ballSpeed, SkillIconTable iconTable)
     {
         this.ballManager = ballManager;
         this.origin = origin;
         this.shootCooldown = shootCooldown;
         this.ballSpeed = ballSpeed;
+        this.iconTable = iconTable;
 
         ballPool = ballManager.ObjectPool.CreateObjectPool(
             ballPrefab,
@@ -47,7 +47,7 @@ public class BallShooter
     {
         GameObject ballObj = ballPool.Get();
         ballObj.transform.position = origin.position;
-        ballObj.GetComponent<SpriteRenderer>().sprite = GetSprite(loadout.spritePath);
+        ballObj.GetComponent<SpriteRenderer>().sprite = iconTable.Get(loadout.skill ?? SkillId.NormalBall);
 
         Ball ball = ballObj.GetComponent<Ball>();
         ball.OnHitMonster += HandleBallHitMonster;
@@ -74,17 +74,6 @@ public class BallShooter
         ball.OnHitMonster -= HandleBallHitMonster;
         ball.OnExitField -= HandleBallExitField;
         ballPool.Release(ball.gameObject);
-    }
-
-    // 볼 스프라이트 — 경로는 로드아웃(CSV)이 들고 옴, 여기는 로드+캐시만 (스킬 종류를 모름 = OCP)
-    private Sprite GetSprite(string path)
-    {
-        if (!spriteCache.TryGetValue(path, out Sprite sprite))
-        {
-            sprite = Resources.Load<Sprite>(path);
-            spriteCache[path] = sprite;
-        }
-        return sprite;
     }
 
 }
