@@ -16,10 +16,8 @@ public class SkillIconTable : ScriptableObject
 
     [SerializeField] private Entry[] entries;
 
-    public Sprite Get(SkillId id) => Find(entries, id);
-
     // 못 찾으면 null + 경고 — 조용한 실패를 로그로 드러내는 게 이 표의 존재 이유
-    public static Sprite Find(Entry[] entries, SkillId id)
+    public Sprite Get(SkillId id)
     {
         foreach (Entry e in entries)
             if (e.id == id) return e.sprite;

@@ -14,9 +14,14 @@ public class OutGameManager : MonoBehaviour
 
     private void InitializeManagers()
     {
-        GameObject.FindGameObjectWithTag("UIManager").TryGetComponent(out OutGameUIManager uiManager);
+        // 태그 미지정/오브젝트 부재 시 원인 불명 NRE 대신 명시 에러 (검수 v6)
+        var uiManagerGo = GameObject.FindGameObjectWithTag("UIManager");
+        if (uiManagerGo == null || !uiManagerGo.TryGetComponent(out OutGameUIManager uiManager))
+        {
+            Debug.LogError("[OutGameManager] 'UIManager' 태그의 OutGameUIManager를 찾지 못함 — 씬 구성 확인");
+            return;
+        }
         UIManager = uiManager;
-        UIManager.SetOutGameManager(this);
         managers.Add(UIManager);
 
         foreach (var manager in managers)

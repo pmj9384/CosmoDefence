@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     private GameState previousState;
     private GameState currentState;
     public GameState CurrentState => currentState;
-    public GameState PreviousState => previousState;
 
     private float previousStopTimeScale;
 
@@ -180,9 +179,7 @@ public class GameManager : MonoBehaviour
     public void AddGameStateEnterAction(GameState state, Action action) => gameStateEnterAction[(int)state] += action;
     public void RemoveGameStateEnterAction(GameState state, Action action) => gameStateEnterAction[(int)state] -= action;
     public void AddGameStateStartAction(GameState state, Action action) => gameStateStartAction[(int)state] += action;
-    public void RemoveGameStateStartAction(GameState state, Action action) => gameStateStartAction[(int)state] -= action;
     public void AddGameStateExitAction(GameState state, Action action) => gameStateExitAction[(int)state] += action;
-    public void RemoveGameStateExitAction(GameState state, Action action) => gameStateExitAction[(int)state] -= action;
     #endregion
 
     private void PauseTimeScale()

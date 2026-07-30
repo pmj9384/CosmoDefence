@@ -64,7 +64,6 @@ public class MonsterManager : InGameManager
 
     // 컨베이어 하강 속도 — WaveManager가 행 간격(한 칸 시간)을 이 값으로 계산
     public float MoveSpeed => moveSpeed;
-    public bool FieldIsEmpty => field.IsEmpty;
 
     // 필드 소탕 (보스 격파 후 새 구간 전환용) — "처치"가 아니라 제거: 킬 이벤트·점수·레벨 없이 풀 반환
     public void ClearField() => ClearAllMonsters();
@@ -115,7 +114,7 @@ public class MonsterManager : InGameManager
         // 블록 스프라이트가 점유 크기 그대로 제작됨(Block_1x1/1x2/2x1/2x2, 1칸=1WU) — 균등 스케일 유지
         monster.transform.localScale = Vector3.one * fieldManager.CellWidth;
         monster.GetComponent<MonsterVisual>().Apply(type);
-        monster.GetComponent<MonsterHpBar>().AlignToBottomCell(type.height, fieldManager.CellHeight / fieldManager.CellWidth);
+        monster.GetComponent<MonsterHpBar>().AlignToBottomCell(type.height);
         // 콜라이더는 블록 스프라이트 크기(0.96/칸)에 맞춤 — 기존 1×1 판정과 동일 기준
         monster.GetComponent<BoxCollider2D>().size = new Vector2(type.width * 0.96f, type.height * 0.96f);
 

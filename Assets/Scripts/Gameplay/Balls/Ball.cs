@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class Ball : MonoBehaviour
 {
+    private static int wallLayer = -1, monsterLayer = -1;   // 충돌마다 문자열 레이어 조회 회피
     public event Action<Ball, Collider2D, Vector2> OnHitMonster;   // (볼, 몬스터 콜라이더, 충돌 노멀)
     public event Action<Ball> OnExitField;
 
@@ -98,7 +99,8 @@ public class Ball : MonoBehaviour
         rb.linearVelocity = dir * launchSpeed;
 
         int layer = collision.gameObject.layer;
-        if (layer == LayerMask.NameToLayer("Wall"))
+        if (wallLayer < 0) { wallLayer = LayerMask.NameToLayer("Wall"); monsterLayer = LayerMask.NameToLayer("Monster"); }
+        if (layer == wallLayer)
         {
             WallBounceCount++;   // "벽" 카운트는 벽만 — 패시브 '마법 거울' 판정 근거
             // 바닥 벽(노멀이 위)에 한 번 튕기면 회수 모드. Wall 레이어 가드 필수 —
@@ -106,7 +108,7 @@ public class Ball : MonoBehaviour
             if (collision.GetContact(0).normal.y > 0.5f)
                 isReturning = true;
         }
-        else if (layer == LayerMask.NameToLayer("Monster"))
+        else if (layer == monsterLayer)
         {
             // 원작: 볼은 블록(몬스터)에 맞으면 데미지를 주고 튕겨나감 — 소멸하지 않음.
             // 데미지 계산·적용은 이벤트를 받은 SkillManager가 담당 (Ball은 사실만 보고)

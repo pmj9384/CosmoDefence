@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.SceneManagement;
 
 
 public class ObjectPoolManager : IManager
@@ -22,8 +20,6 @@ public class ObjectPoolManager : IManager
                 createFunc: createFunc, 
                 actionOnGet: onGet,
                 actionOnRelease: onRelease,
-                //actionOnDestroy: obj => obj.Dispose(),
-                //collectionCheck: false,
                 defaultCapacity: 100,
                 maxSize: 500
             );
@@ -46,6 +42,8 @@ public class ObjectPoolManager : IManager
 
     public void Clear()
     {
+        foreach (var pool in pools.Values)
+            pool.Dispose();   // ObjectPool은 IDisposable — 씬 리로드가 인스턴스를 지워줘도 계약은 지킨다 (검수 v6)
         pools.Clear();
     }
 

@@ -9,7 +9,6 @@ public class WaveManager : InGameManager
     public event System.Action OnBossIncoming;   // 보스 스폰 예고 (WARNING 배너) — 실제 스폰은 bossWarningDelay 뒤
 
     // 진행도(처치 비율)의 분모 — 패턴의 총 유닛 수 (멀티셀도 1유닛)
-    public int TotalMonsterCount => pattern.TotalUnits;
 
     // 다음 보스까지의 진행도(0~1) — 무한모드 HUD 게이지용. 구간(배치 이후 컨베이어) 내 행수 / 간격.
     // 구간 소진(==간격) = 보스 스폰 대기 한 칸 — 100% 유지로 "보스 온다" 예고 (유저 확정 2026-07-15).
@@ -27,7 +26,7 @@ public class WaveManager : InGameManager
     [SerializeField] private int initialRows = 5;      // 구간 시작 일괄 스폰 행 수 (원작 관찰)
     [SerializeField] private int baseHp = 30;          // 행 HP = baseHp + 행번호 × hpPerRow [튜닝]
     [SerializeField] private int hpPerRow = 10;
-    [SerializeField] private int bossWaveInterval = 20; // 구간 길이 — 배치 후 몇 행 뒤 보스인지 (설계 §2-③)
+    [Min(1)][SerializeField] private int bossWaveInterval = 20; // 구간 길이 — 배치 후 몇 행 뒤 보스인지 (설계 §2-③)
     [SerializeField] private float bossClearDelay = 3f; // 보스 격파 → 소탕 후 다음 구간 배치까지 숨고르기(초)
     [SerializeField] private float bossWarningDelay = 2.5f; // WARNING 예고 → 실제 스폰까지 (배너 깜빡임 2초와 맞물림)
 
