@@ -14,6 +14,8 @@ public class SkinScreen : UIScreen
     {
         base.Open();
         BuildList();
+        // 구독 전 선해제 — 현재 탭 재터치 시 Open 재호출로 중복 구독 방지 (ShopScreen과 동일, 검수 v6)
+        GameDataManager.Instance.SkinUserData.OnSkinEquipped -= OnSkinEquipped;
         GameDataManager.Instance.SkinUserData.OnSkinEquipped += OnSkinEquipped;
     }
 
