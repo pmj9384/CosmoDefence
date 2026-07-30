@@ -138,8 +138,10 @@ public static class OutGameUISkinner
         var fontSrc = one.Find("Text").GetComponent<TMP_Text>();   // 폰트/머티리얼 복제 원본 (Kostar)
 
         AddTitle(shop, fontSrc, "ShopTitle", "PILOT GACHA");
-        BuildCard(one, fontSrc, "뽑기 1회", "100", crate1, coin, pill, new Vector2(-170f, -30f), null);
-        BuildCard(ten, fontSrc, "뽑기 10회", "900", crate2, coin, pill, new Vector2(170f, -30f), "×10");
+        // 가격은 GachaService 상수가 SSOT — 리터럴로 박으면 비용 변경 시 씬 텍스트가 거짓말 (검수 v6).
+        // 런타임에도 ShopScreen.Awake가 같은 상수로 덮어써 이중 방어
+        BuildCard(one, fontSrc, "뽑기 1회", GachaService.DrawOneCost.ToString(), crate1, coin, pill, new Vector2(-170f, -30f), null);
+        BuildCard(ten, fontSrc, "뽑기 10회", GachaService.DrawTenCost.ToString(), crate2, coin, pill, new Vector2(170f, -30f), "×10");
 
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);

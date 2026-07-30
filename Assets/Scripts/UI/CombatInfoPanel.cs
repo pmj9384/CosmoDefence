@@ -38,7 +38,7 @@ public class CombatInfoPanel : UIElement
     private void Close()
     {
         Hide();
-        gameUIManager.ShowUIElement(UIElementEnums.PausePanel);   // 퍼즈로 복귀
+        gameUIManager.ShowUIElement<PausePanel>();   // 퍼즈로 복귀
     }
 
     private void Refresh()

@@ -23,6 +23,7 @@ public class ShooterAimer
     private readonly List<SpriteRenderer> dots = new();     // 점 풀 — 필요한 만큼만 켬
     private readonly Transform dotsRoot;
     private readonly Sprite dotSprite;
+    private readonly float wallPadding;   // 반사점 안쪽 당김 (FieldManager SSOT에서 주입)
 
     private Transform aimDot;   // 끝점 레티클 (씬 오브젝트 — Shooter가 넘겨줌)
     public void SetAimDot(Transform dot) => aimDot = dot;
@@ -33,6 +34,7 @@ public class ShooterAimer
         this.origin = origin;
         this.maxBounces = maxBounces;
         this.maxDistance = maxDistance;
+        wallPadding = ballManager.WallPadding;   // 생성 시점(Shooter.Start)엔 FieldManager 선등록 — 안전
         aimMask = LayerMask.GetMask("Wall", "Monster");
         monsterLayer = LayerMask.NameToLayer("Monster");
 
@@ -129,10 +131,10 @@ public class ShooterAimer
                 break;
             }
 
-            // 벽 반사점 표시는 안쪽으로 당김 — 물리 벽은 그림 벽보다 wallPadding(0.15)만큼 바깥이라
-            // 그대로 그리면 조준선이 그림 벽을 뚫고 꺾여 보임 (FieldManager.wallPadding과 짝)
+            // 벽 반사점 표시는 안쪽으로 당김 — 물리 벽은 그림 벽보다 wallPadding만큼 바깥이라
+            // 그대로 그리면 조준선이 그림 벽을 뚫고 꺾여 보임 (값은 FieldManager가 SSOT, 생성자에서 주입)
             bool isWall = hit.collider.gameObject.layer != monsterLayer;
-            points.Add(isWall ? hit.point + hit.normal * 0.15f : hit.point);
+            points.Add(isWall ? hit.point + hit.normal * wallPadding : hit.point);
             remaining -= hit.distance;
 
             if (!isWall)

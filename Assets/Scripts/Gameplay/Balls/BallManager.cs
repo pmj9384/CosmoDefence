@@ -12,6 +12,7 @@ public class BallManager : InGameManager
 
     public GameManager.GameState CurrentGameState => GameManager.CurrentState;
     public ObjectPoolManager ObjectPool => GameManager.ObjectPool;
+    public float WallPadding => GameManager.FieldManager.WallPadding;   // 조준선용 필드 지오메트리 (SSOT는 FieldManager)
 
     private UnityEngine.Pool.ObjectPool<GameObject> fragmentPool;
     private readonly System.Random rng = new();   // 파편 산탄 방향용

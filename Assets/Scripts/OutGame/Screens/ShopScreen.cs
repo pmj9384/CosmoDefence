@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +8,16 @@ public class ShopScreen : UIScreen
     [SerializeField] Button drawTenButton;
     [SerializeField] GachaSingleResultPopup gachaSingleResultPopup;
     [SerializeField] GachaTenResultPopup gachaTenResultPopup;
-
-
+    [SerializeField] TMP_Text priceOneText;   // 카드 PricePill/PriceText — 씬에 박힌 숫자를 상수로 덮음
+    [SerializeField] TMP_Text priceTenText;
 
     private void Awake()
     {
         drawOneButton.onClick.AddListener(OnDrawOne);
         drawTenButton.onClick.AddListener(OnDrawTen);
+        // 가격 표기의 SSOT = GachaService 상수 — 씬 텍스트와 이중 관리하면 비용 변경 시 UI가 거짓말한다 (검수 v6)
+        priceOneText.text = GachaService.DrawOneCost.ToString();
+        priceTenText.text = GachaService.DrawTenCost.ToString();
     }
 
 

@@ -98,6 +98,8 @@ public class FieldManager : InGameManager
     // 격자/몬스터 좌표는 불변, 벽만 밀림. Play 보며 인스펙터 튜닝.
     [SerializeField] private float wallPadding = 0.15f;
 
+    public float WallPadding => wallPadding;   // 조준선 반사점 당김이 같은 값을 써야 함 (SSOT — 검수 v6)
+
     private void CreateWallColliders()
     {
         int wallLayer = LayerMask.NameToLayer("Wall");
