@@ -15,13 +15,7 @@ public class SaveDataV1 : SaveData
     public StaminaSystemSave staminaSystemSave;
     public SkinUserDataSave skinUserDataSave;
 
-    // [AnimalBreakOut] 게임 전용 시스템
-    //public GoldAnimalTokenKeySystemSave goldAnimalTokenKeySystemSave;
-    //public PlayerLevelSystemSave playerLevelSystemSave;
-    //public StaminaSystemSave staminaSystemSave;
-    //public AnimalUserDataListSave animalUserDataTableSave;
-
-    public DateTime saveTime = DateTime.Now;
+    public DateTime saveTime = DateTime.UtcNow;   // 저장 시각 기록용 — 다른 시각 필드(UtcNow)와 통일
 
     public SaveDataV1()
     {

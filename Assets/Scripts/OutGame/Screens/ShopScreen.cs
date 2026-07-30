@@ -39,8 +39,10 @@ public class ShopScreen : UIScreen
     {
         base.Open();
         OnCoinsChanged(0);
+        // 구독 전 선해제: UIManager.OpenScreen이 이미 열린 스크린에도 Open을 재호출해서
+        // (하단바 현재 탭 재터치) 그냥 +=만 하면 중복 구독이 쌓인다 (검수 v6)
+        GameDataManager.Instance.PlayerAccountData.OnCoinsChanged -= OnCoinsChanged;
         GameDataManager.Instance.PlayerAccountData.OnCoinsChanged += OnCoinsChanged;
-
     }
 
     public override void Close()

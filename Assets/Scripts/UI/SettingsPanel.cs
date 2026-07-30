@@ -11,8 +11,8 @@ public class SettingsPanel : UIElement
     {
         gameObject.SetActive(false);
         closeButton.onClick.AddListener(Close);
-        bgmSlider.onValueChanged.AddListener(v => SoundManager.Instance.SetBgmVolume(v));
-        sfxSlider.onValueChanged.AddListener(v => SoundManager.Instance.SetSfxVolume(v));
+        bgmSlider.onValueChanged.AddListener(v => SoundManager.Instance?.SetBgmVolume(v));
+        sfxSlider.onValueChanged.AddListener(v => SoundManager.Instance?.SetSfxVolume(v));
     }
 
     // 닫으면 퍼즈로 복귀 — CombatInfoPanel과 동일 문법 (퍼즈에서 열리는 창, 상태는 GameStop 유지) [이식 개조]

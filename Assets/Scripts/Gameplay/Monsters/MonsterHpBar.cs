@@ -35,7 +35,7 @@ public class MonsterHpBar : MonoBehaviour
     }
 
     // 점유 높이별 바 위치 — 계산식 대신 실측값 (세로 멀티셀은 루트가 점유 중앙이라 좌표계가 다름)
-    public void AlignToBottomCell(int cellHeight, float cellLocalHeight)
+    public void AlignToBottomCell(int cellHeight)
     {
         Vector3 pos = barRoot.transform.localPosition;
         pos.y = cellHeight > 1 ? barYTall : barY1x1;

@@ -14,7 +14,7 @@ public class StaminaSystem : ISaveLoad
     public bool IsStaminaFull => CurrentStamina >= MaxStamina;
 
     private DateTime lastStaminaRecoverTime;
-    public Coroutine coRecovery;
+    private Coroutine coRecovery;
 
     public event Action<int> onStaminaChanged;
 

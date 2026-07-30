@@ -7,7 +7,6 @@ public struct BallLoadout
     public int level;           // 1~3 (노멀볼은 0)
     public int damage;          // 볼 기본 데미지 (SkillTable의 ballDamage 또는 노멀 8)
 
-    public bool IsNormal => skill == null;
 
     public static BallLoadout Normal => new BallLoadout
     { skill = null, level = 0, damage = NormalBallDamage };

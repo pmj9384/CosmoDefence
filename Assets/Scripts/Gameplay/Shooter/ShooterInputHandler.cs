@@ -42,6 +42,7 @@ public class ShooterInputHandler
     private void UpdateDirection(Vector2 screenPos)
     {
         Camera cam = Camera.main;
+        if (cam == null) return;   // MainCamera 태그 부재 — 드래그 첫 프레임 NRE 방지
         float camZ = Mathf.Abs(cam.transform.position.z);
         Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, camZ));
 

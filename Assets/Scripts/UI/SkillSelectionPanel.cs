@@ -69,7 +69,7 @@ public class SkillSelectionPanel : MonoBehaviour
                 descriptions[i].text = "기본 볼이 1개 늘어나 연달아 발사됩니다.";
                 damageBadges[i].SetActive(true);
                 damages[i].text = "볼 +1";
-                SetDiamonds(i, 0, 1);
+                SetDiamonds(i, 0);
                 continue;
             }
 
@@ -89,7 +89,7 @@ public class SkillSelectionPanel : MonoBehaviour
             // 원작 #73: 액티브는 ★볼데미지, 레벨은 하단 다이아 (선택 시 도달할 레벨만큼 점등). 만렙 카드는 "+1" 표기
             damageBadges[i].SetActive(isActiveKind);
             if (isActiveKind) damages[i].text = isPlusOne ? $"★ {def.GetLevel(showLevel).ballDamage}  볼 +1" : $"★ {def.GetLevel(showLevel).ballDamage}";
-            SetDiamonds(i, currentLv, showLevel);   // 만렙이면 3개 모두 점등(레벨 고정), 4개째 없음
+            SetDiamonds(i, currentLv);   // 만렙이면 3개 모두 점등(레벨 고정), 4개째 없음
         }
 
         overlay.SetActive(true);
@@ -97,7 +97,7 @@ public class SkillSelectionPanel : MonoBehaviour
 
     // 다이아 = "현재 보유 레벨" (유저 확정): 1렙=1개, 2렙=2개, 3렙=3개 밝은 노랑.
     // 미보유(0렙)만 첫 칸 어두운 노랑 — 고르면 그 자리가 밝게 켜지는 프리뷰
-    private void SetDiamonds(int card, int currentLevel, int showLevel)
+    private void SetDiamonds(int card, int currentLevel)
     {
         for (int k = 0; k < 3; k++)
         {

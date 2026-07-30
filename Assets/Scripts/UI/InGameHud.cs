@@ -104,7 +104,7 @@ public class InGameHud : UIElement
             lastKillsIntoLevel = level.KillsIntoLevel;
             levelText.text = $"Lv.{level.Level}";
         }
-        levelTarget = fillingToFull ? 1f : (float)level.KillsIntoLevel / level.KillsToNext;
+        levelTarget = fillingToFull ? 1f : (float)level.KillsIntoLevel / Mathf.Max(1, level.KillsToNext);
 
         // 부드럽게 차오르는 연출 (원작) — 목표값은 즉시, 표시는 보간
         progressSlider.value = Mathf.MoveTowards(progressSlider.value, progressTarget, gaugeFillSpeed * Time.deltaTime);

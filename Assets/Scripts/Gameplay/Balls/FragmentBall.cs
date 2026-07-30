@@ -13,7 +13,10 @@ public class FragmentBall : MonoBehaviour
     private const float Speed = 8f;
     private const float ArmDelay = 0.15f;
 
+    private static int monsterLayer = -1;   // 문자열 레이어 조회 반복 회피 (충돌 경로)
+
     private int damage;
+    private bool despawned;   // 같은 물리 패스에 큐된 두 번째 트리거의 이중 데미지 차단
     private float lifeTimer;
     private float armTimer;
     private Rigidbody2D rb;
@@ -26,6 +29,8 @@ public class FragmentBall : MonoBehaviour
         damage = fragmentDamage;
         lifeTimer = Lifetime;
         armTimer = ArmDelay;
+        despawned = false;
+        if (monsterLayer < 0) monsterLayer = LayerMask.NameToLayer("Monster");
 
         float angle = Mathf.Lerp(30f, 150f, (float)rng.NextDouble()) * Mathf.Deg2Rad;   // 위쪽 반원
         rb.gravityScale = 0f;
@@ -36,15 +41,19 @@ public class FragmentBall : MonoBehaviour
     {
         armTimer -= Time.deltaTime;
         lifeTimer -= Time.deltaTime;
-        if (lifeTimer <= 0f)
+        if (lifeTimer <= 0f && !despawned)
+        {
+            despawned = true;
             OnDespawn?.Invoke(this);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (armTimer > 0f) return;
-        if (other.gameObject.layer != LayerMask.NameToLayer("Monster")) return;
+        if (armTimer > 0f || despawned) return;
+        if (other.gameObject.layer != monsterLayer) return;
 
+        despawned = true;   // "처음 만난 몬스터에" 계약 — 겹친 2기가 같은 패스에 트리거돼도 1회만
         other.GetComponent<Monster>()?.TakeDamage(damage, false, SkillId.ClusterBall);   // 부가 피해, 집계는 클러스터 귀속
         OnDespawn?.Invoke(this);
     }

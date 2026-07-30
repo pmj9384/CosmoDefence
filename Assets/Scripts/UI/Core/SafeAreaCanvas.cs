@@ -1,33 +1,6 @@
 using UnityEngine;
 
 
-public enum AnchorPresets
-{
-    TopLeft,
-    TopCenter,
-    TopRight,
-
-    MiddleLeft,
-    MiddleCenter,
-    MiddleRight,
-
-    BottomLeft,
-    BottonCenter,
-    BottomRight,
-    BottomStretch,
-
-    VertStretchLeft,
-    VertStretchRight,
-    VertStretchCenter,
-
-    HorStretchTop,
-    HorStretchMiddle,
-    HorStretchBottom,
-
-    StretchAll,
-    None
-}
-
 [RequireComponent(typeof(RectTransform))]
 public class SafeAreaCanvas : MonoBehaviour
 {
