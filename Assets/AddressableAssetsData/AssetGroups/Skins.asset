@@ -18,202 +18,242 @@ MonoBehaviour:
   - m_GUID: 00dd76ef25915443aa0953bef6b9daa8
     m_Address: Skins/Rare_Ranger_weapon
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 025aa3cbcbd484bf9b9a7ab20f0fe24f
     m_Address: Skins/Rare_Bounty_weapon
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 05e8710f2476748b98de2697350371f2
     m_Address: Skins/Epic_Captain
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 097be6875a25d4e899a54397042a97fa
     m_Address: Skins/Rare_Cyborg_weapon
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 120ad46cf3a8e45658d72c68136c4799
     m_Address: Skins/Epic_Phantom_weapon
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1772ddff8721c446c8e34958c32137b8
     m_Address: Skins/Common_Rookie_head
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 35dc4a1953237400eb0788223f4fd334
     m_Address: Skins/Common_Navigator_weapon
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 418e69778d20a4467be5182ff7906a20
     m_Address: Skins/Rare_Ranger
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 47a4bf5b173864c47a45cd4ad93c3508
     m_Address: Skins/Epic_Alien_body
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 52c9928b31f3e4527bf6c73099a4786b
     m_Address: Skins/Epic_Alien
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5a567c2bf65da4c4f84fc77bfe81b8a8
     m_Address: Skins/Common_Rookie
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5f148ef5179d847e6a3b0568f32e01b2
     m_Address: Skins/Rare_Ranger_body
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 62d55797ac8d84f34bd4cb0a67913fb1
     m_Address: Skins/Rare_Bounty_body
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6413615b4b8114a7ca6ed00d10b5ebd8
     m_Address: Skins/Epic_Alien_weapon
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 657a6edf28a0443d08f8c30176862753
     m_Address: Skins/Common_Navigator_head
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6807728b6a3104c1e8cdb0ad1f735a4e
     m_Address: Skins/Common_Navigator
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6d77a203fea0e424ea83856859d85a5c
     m_Address: Skins/Epic_Captain_head
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 89b172d04889b4135ad05a7cb7cf9ec4
     m_Address: Skins/Common_Engineer_body
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9ad717dde97eb4c24b04528df1f3d79a
     m_Address: Skins/Common_Rookie_body
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a003fe158b2fc490d96e9f9dabb5a87b
     m_Address: Skins/Epic_Phantom
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a080cf64cd9704791884a6fce5d01ba7
     m_Address: Skins/Epic_Captain_weapon
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a3ba4387fabd947cd833cd40533e7092
     m_Address: Skins/Rare_Bounty
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a5106a8cb3bfc40dc8ed3a8984be4354
     m_Address: Skins/Rare_Cyborg_head
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a5628c565485c423ab9865e2c7821b1c
     m_Address: Skins/Rare_Ranger_head
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: af43d0a1c1a8549adb37f9a8bf7cb1ea
     m_Address: Skins/Common_Cadet_head
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b4a04406c31884613b1a82ae8b0c20a5
     m_Address: Skins/Epic_Alien_head
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bdedc9d54bd6b45fcab5cf823345e20d
     m_Address: Skins/Epic_Phantom_body
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: be026e7363833420aa53fdc5fda985db
     m_Address: Skins/Rare_Cyborg_body
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c4fe9be4f088343e897944839b02af07
     m_Address: Skins/Epic_Captain_body
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c67b1888a725140e08841b873bfa5387
     m_Address: Skins/Common_Cadet
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c75938543c297499699f22b3477baf74
     m_Address: Skins/Common_Engineer_weapon
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c94d2d44fdf1e45b596563b3350d2bf1
     m_Address: Skins/Common_Engineer
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ce565e5c3aaa54508a30129796f306b5
     m_Address: Skins/Common_Navigator_body
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e2b9af4b5cb594f8bb24961837fa4dfc
     m_Address: Skins/Common_Cadet_weapon
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e9c87a185e4a84d408e8658d1c7965fd
     m_Address: Skins/Common_Rookie_weapon
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ebcfd8df1eeb048a1b08f0299aa3799c
     m_Address: Skins/Common_Cadet_body
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f235b0d9444344a1eafed2907b17febe
     m_Address: Skins/Epic_Phantom_head
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f3bb58cd0ff964d5786a9a0fa06a87ae
     m_Address: Skins/Rare_Bounty_head
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f5b940ccc6f654375a87833b75751556
     m_Address: Skins/Rare_Cyborg
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fa15675bcf1bd4f14b9926fa9a98e6b1
     m_Address: Skins/Common_Engineer_head
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Skins
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 088de086ec228446dae624981a34d49b, type: 2}
