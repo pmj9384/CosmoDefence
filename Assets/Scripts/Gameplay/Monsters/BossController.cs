@@ -14,6 +14,7 @@ public class BossController : MonoBehaviour
 
     [SerializeField] private float summonInterval = 4f;   // 소환 주기(초)
     [SerializeField] private float attackInterval = 3f;   // 바닥 정지 후 지속공격 주기(초)
+    [SerializeField] private float entryHoldSeconds = 4f; // 등장 후 제자리 대기 — 잔여 행 정리 시간 (유저 제안 2026-08-03)
 
     private Monster monster;
     private MonsterMover mover;
@@ -32,6 +33,17 @@ public class BossController : MonoBehaviour
         active = true;
         mover.OnReachedBottom += HandleReachedBottom;   // 바닥 도달 → 지속공격 개시
         monster.OnDied += HandleDied;
+        StartCoroutine(EntryThenAct());                  // 등장 대기 → 하강·소환 개시
+    }
+
+    // 등장 연출: 제자리 버티기 — 하강만 멈추고 피격은 허용 (잔여를 빨리 정리한 만큼 프리딜 보상).
+    // 소환도 대기 후 시작 — 대기 중 잡몹이 새로 깔리면 "정리 시간"이라는 취지가 무너진다
+    private IEnumerator EntryThenAct()
+    {
+        mover.enabled = false;
+        yield return new WaitForSeconds(entryHoldSeconds);   // 스케일 시간 — 퍼즈·선택창과 함께 멈춤
+        if (!active) yield break;
+        mover.enabled = true;
         StartCoroutine(SummonLoop());                    // 하강 중에도 소환 (원작 관찰 없음 — 유저 확정)
     }
 
@@ -45,6 +57,7 @@ public class BossController : MonoBehaviour
         mover.OnReachedBottom -= HandleReachedBottom;
         monster.OnDied -= HandleDied;
         StopAllCoroutines();
+        mover.enabled = true;   // 풀 재사용 방어 — 등장 대기 중 죽으면 꺼진 채 반환돼 다음 잡몹이 안 내려온다
     }
 
     private void HandleDied(Monster _) => Deactivate();
