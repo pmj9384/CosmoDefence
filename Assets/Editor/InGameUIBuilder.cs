@@ -125,10 +125,8 @@ public static class InGameUIBuilder
         closeBtn.targetGraphic = overlay.GetComponent<UnityEngine.UI.Image>();
         closeBtn.transition = Selectable.Transition.None;
 
+        // 스테이지 라벨·진행도 없음 — 무한 모드라 스테이지 개념이 없고, 진행도는 HUD가 이미 표시 (2026-08-03 유저 확정)
         Text(overlay, "Title", "전투 정보", 56, F(0.90f), Vector2.zero, new(640, 80), color: new Color(1f, 0.85f, 0.5f));
-        Text(overlay, "Stage", "Stage 1  (Normal)", 32, F(0.83f), Vector2.zero, new(640, 50), color: new Color(0.6f, 0.8f, 1f));
-        var pSlider = SliderGauge(overlay, "ProgressSlider", new Color(0.85f, 0.22f, 0.18f), F(0.78f), Vector2.zero, new(420, 20));
-        var pText = Text(overlay, "ProgressText", "0%", 20, F(0.78f), Vector2.zero, new(420, 26), bold: true);
         Text(overlay, "CloseHint", "터치하여 닫기", 26, F(0.05f), Vector2.zero, new(400, 40), color: new Color(0.6f, 0.6f, 0.6f));
 
         const int RowCount = 7;
@@ -157,8 +155,7 @@ public static class InGameUIBuilder
             dpss[i] = Text(row, "Dps", "0", 36, C, new(330, -14), new(150, 44), bold: true);
         }
 
-        Assign(panel, ("overlay", overlay.gameObject), ("closeButton", closeBtn),
-                      ("progressText", pText), ("progressSlider", pSlider));
+        Assign(panel, ("overlay", overlay.gameObject), ("closeButton", closeBtn));
         AssignArray(panel, "rows", rows);
         AssignArray(panel, "icons", icons);
         AssignArray(panel, "levels", levels);
@@ -397,8 +394,8 @@ public static class InGameUIBuilder
         Clear(pause.transform);
         var overlay = Overlay(pause.transform, 0.9f);
 
+        // Stage 라벨 없음 — 갱신 코드 없는 정적 문구가 "Stage 1" 거짓 표시를 하던 것 제거 (2026-08-03 유저 확정)
         Text(overlay, "Title", "일시정지", 76, F(0.87f), Vector2.zero, new(640, 90), color: new Color(1f, 0.9f, 0.6f));
-        Text(overlay, "Stage", "Stage 1  (Normal)", 34, F(0.78f), Vector2.zero, new(640, 60), color: new Color(0.6f, 0.8f, 1f));
         var combat = ButtonBox(overlay, "CombatInfoButton", "il", 26, new Color(0.3f, 0.32f, 0.38f), F(0.78f), new(240, 0), new(52, 52));
 
         Text(overlay, "ActiveLabel", "Active Skill", 28, F(0.665f), new(-250, 0), new(400, 40), color: new Color(1f, 0.6f, 0.55f));
@@ -426,8 +423,8 @@ public static class InGameUIBuilder
         var overlay = Overlay(result.transform, 0.75f);
         var panel = Image(overlay, "Panel", new Color(0.13f, 0.12f, 0.16f, 0.97f), C, Vector2.zero, new(520, 480)).transform;
 
-        var title = Text(panel, "Title", "Stage Fail", 60, C, new(0, 140), new(480, 80), color: new Color(1f, 0.85f, 0.4f));
-        Text(panel, "Stage", "Stage 1  (Normal)", 30, C, new(0, 60), new(480, 50), color: new Color(0.6f, 0.8f, 1f));
+        // 플레이스홀더도 런타임과 동일한 "Game Over"로 — Stage 라벨은 무한모드라 제거 (검수 v5 #9와 정합)
+        var title = Text(panel, "Title", "Game Over", 60, C, new(0, 140), new(480, 80), color: new Color(1f, 0.85f, 0.4f));
         var info = Text(panel, "Info", "", 34, C, new(0, -10), new(480, 60));
         var restart = ButtonBox(panel, "RestartButton", "다시 시작", 36, new Color(0.95f, 0.65f, 0.2f), C, new(0, -150), new(300, 88), boldLabel: true);
 
