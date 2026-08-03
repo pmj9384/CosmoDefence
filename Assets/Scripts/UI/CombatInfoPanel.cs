@@ -11,8 +11,6 @@ public class CombatInfoPanel : UIElement
     [Header("씬 참조 (빌더 조립)")]
     [SerializeField] private GameObject overlay;
     [SerializeField] private Button closeButton;        // 전체 화면 터치 영역
-    [SerializeField] private TMP_Text progressText;     // "N%"
-    [SerializeField] private Slider progressSlider;
     [SerializeField] private GameObject[] rows;          // 행 루트 (최대 7: 노멀+액티브4+성냥+여유)
     [SerializeField] private Image[] icons;
     [SerializeField] private TMP_Text[] levels;          // "◆x N"
@@ -46,11 +44,6 @@ public class CombatInfoPanel : UIElement
         var stats = gameManager.StatsManager.Combat;
         var skills = gameManager.SkillManager.PlayerSkills;
         float elapsed = gameManager.StatsManager.CombatElapsed;
-
-        // 진행도 = 다음 보스까지 (HUD와 같은 정의 — 무한모드 처치% 오버슛 대체)
-        float bossProgress = gameManager.WaveManager.BossProgress;
-        progressText.text = $"{Mathf.RoundToInt(bossProgress * 100)}%";
-        progressSlider.value = bossProgress;
 
         // 행 구성: 노멀(항상) → 보유 액티브 → 성냥(보유 시 — 부가 피해도 소스 집계, 원작 확인)
         var sources = new List<(SkillId? id, string name, int level)>
