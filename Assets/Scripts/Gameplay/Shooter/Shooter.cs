@@ -29,6 +29,13 @@ public class Shooter : MonoBehaviour
     private void Start()
     {
         context = GetComponent<PlayerContext>();   // 매니저 관문 (형제 공유) — 배선은 관문 1곳뿐
+
+        // 슈터 X를 필드 중심에서 파생 — 필드 rect가 바뀌어도 자동 추종, 씬 고정값 드리프트 차단.
+        // FieldManager.Initialize()는 GameManager.Awake()에서 먼저 끝나므로(28행 주석 참고) 여기서 값이 준비돼 있음
+        Vector3 pos = transform.position;
+        pos.x = context.FieldCenterX;
+        transform.position = pos;
+
         BallManager ballManager = context.Balls;
         inputHandler = new ShooterInputHandler(transform);
         shooter = new BallShooter(ballManager, ballPrefab, transform, shootCooldown, ballSpeed, iconTable);
