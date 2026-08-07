@@ -12,7 +12,7 @@ public static class InGameUIBuilder
     private static TMP_FontAsset font;
 
     // 조준선을 점선+끝점 조준점으로 (원작 관찰) — 기존 파츠 눈튜닝을 건드리지 않는 별도 메뉴
-    [MenuItem("Tools/Build Aim Line (점선+조준점)")]
+    [MenuItem("Tools/InGame UI 빌더/Build Aim Line (점선+조준점)")]
     public static void BuildAimLine()
     {
         var shooter = Object.FindFirstObjectByType<Shooter>(FindObjectsInactive.Include);
@@ -60,7 +60,7 @@ public static class InGameUIBuilder
     }
 
     // 플레이어 월드 HP바 조립 (원작 #84 발밑 캡슐 — 몬스터 HpBar와 동일 문법) + 캔버스 슬라이더 은퇴
-    [MenuItem("Tools/Build Player HpBar (월드)")]
+    [MenuItem("Tools/InGame UI 빌더/Build Player HpBar (월드)")]
     public static void BuildPlayerWorldHpBar()
     {
         font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
@@ -106,7 +106,7 @@ public static class InGameUIBuilder
     }
 
     // 전투 정보 창 조립 (원작 #57) — SafeAreaPanel 아래 패널 생성 + 행 7개 + 참조 자동 할당
-    [MenuItem("Tools/Build CombatInfo Panel")]
+    [MenuItem("Tools/InGame UI 빌더/Build CombatInfo Panel")]
     public static void BuildCombatInfoPanel()
     {
         font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
@@ -170,7 +170,7 @@ public static class InGameUIBuilder
     }
 
     // 캐릭터 파츠 조립(조준 연출용)
-    [MenuItem("Tools/Build Shooter Parts + Move HpBar")]
+    [MenuItem("Tools/InGame UI 빌더/Build Shooter Parts + Move HpBar")]
     public static void BuildShooterParts()
     {
         var shooter = Object.FindFirstObjectByType<Shooter>(FindObjectsInactive.Include);
@@ -229,7 +229,7 @@ public static class InGameUIBuilder
     }
 
     // 데미지 팝업 프리팹 생성 + 씬 MonsterManager에 연결 (TMP는 손 YAML 금지 규약 → 에디터 API로)
-    [MenuItem("Tools/Build DamagePopup Prefab")]
+    [MenuItem("Tools/InGame UI 빌더/Build DamagePopup Prefab")]
     public static void BuildDamagePopupPrefab()
     {
         var kostar = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
@@ -261,7 +261,7 @@ public static class InGameUIBuilder
         Debug.Log("[InGameUIBuilder] DamagePopup.prefab 생성 + MonsterManager 연결 완료 — 씬 저장하세요");
     }
 
-    [MenuItem("Tools/Build InGame UI (1회 실행)")]
+    [MenuItem("Tools/InGame UI 빌더/Build InGame UI (1회 실행)")]
     public static void Build()
     {
         font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
@@ -286,7 +286,7 @@ public static class InGameUIBuilder
     }
 
     // HUD만 재조립 (다른 패널의 눈튜닝 보존용 별도 메뉴)
-    [MenuItem("Tools/Build HUD Only (게이지 Slider 통일)")]
+    [MenuItem("Tools/InGame UI 빌더/Build HUD Only (게이지 Slider 통일)")]
     public static void BuildHudOnly()
     {
         font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
@@ -348,7 +348,7 @@ public static class InGameUIBuilder
 
     // ── 일시정지 (원작 #36 비율) ─────────────────────────────────
     // 퍼즈 "슬롯 6개만" 새 구조로 교체 — 위치는 기존(유저 튜닝) 그대로, 다른 오브젝트(유저 제작 포함) 불변
-    [MenuItem("Tools/Build Pause Only (슬롯만 교체)")]
+    [MenuItem("Tools/InGame UI 빌더/Build Pause Only (슬롯만 교체)")]
     public static void BuildPauseOnly()
     {
         var pause = Object.FindFirstObjectByType<PausePanel>(FindObjectsInactive.Include);
@@ -433,7 +433,7 @@ public static class InGameUIBuilder
     }
 
     // 선택창만 재조립 (다른 패널 눈튜닝 보존용 별도 메뉴)
-    [MenuItem("Tools/Build Selection Panel (원작 레이아웃)")]
+    [MenuItem("Tools/InGame UI 빌더/Build Selection Panel (원작 레이아웃)")]
     public static void BuildSelectionOnly()
     {
         font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
