@@ -305,8 +305,6 @@ public static class InGameUIBuilder
         hud.transform.SetParent(topBar, false);
         Stretch((RectTransform)hud.transform);
 
-        Text(hud.transform, "StageName", "1. 깊은 숲", 42, new(0.5f, 1f), new(0, -32), new(520, 54), bold: true);
-
         var pSlider = SliderGauge(hud.transform, "ProgressSlider", new Color(0.85f, 0.22f, 0.18f),
                                   new(0.5f, 1f), new(0, -66), new(400, 22));
         var pText = Text(hud.transform, "ProgressText", "0%", 22, new(0.5f, 1f), new(0, -78), new(460, 30), bold: true);
