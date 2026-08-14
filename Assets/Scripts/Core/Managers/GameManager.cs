@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        SetInitialSettings();
         InitializeStateActions();
         InitializeCoreManagers();
         SetGameState(GameState.WaitLoading);
@@ -65,15 +64,6 @@ public class GameManager : MonoBehaviour
             SkipTitle = false;
             SetGameState(GameState.GamePlay);
         }
-    }
-
-    private void SetInitialSettings()
-    {
-#if UNITY_EDITOR
-        Application.targetFrameRate = -1;
-#else
-        Application.targetFrameRate = 60;
-#endif
     }
 
     private void InitializeStateActions()

@@ -28,6 +28,16 @@ public class PlayerAccountData : ISaveLoad
         set { sfxVolume = Mathf.Clamp(value, 0.0001f, 1f); }
     }
 
+    // 프레임 상한은 원래 기기 설정이라 계정 데이터와 분리하는 게 맞지만, 이 프로젝트는
+    // SaveDataSouceType이 전부 Local이고 계정 전환도 없어 실질 차이가 없다. 세이브 체인을 하나로 유지한다.
+    // PlayerAccountData가 Firebase로 바뀌는 시점에 기기 설정만 따로 떼어낼 것
+    private int frameRateFps = FrameRateSetting.Default;
+    public int FrameRateFps
+    {
+        get => frameRateFps;
+        set { frameRateFps = FrameRateSetting.Sanitize(value); }
+    }
+
     public event Action<int> OnCoinsChanged;
 
     private int coins;
@@ -70,6 +80,7 @@ public class PlayerAccountData : ISaveLoad
         saveData.sfxVolume = SfxVolume;
         saveData.bestScore = BestScore;
         saveData.coins = Coins;
+        saveData.frameRateFps = FrameRateFps;
     }
 
     public void Load()
@@ -78,6 +89,7 @@ public class PlayerAccountData : ISaveLoad
         SfxVolume = 1f;
         BestScore = 0;
         Coins = 0;
+        FrameRateFps = FrameRateSetting.Default;
     }
 
     public void Load(PlayerAccountDataSave saveData)
@@ -87,6 +99,7 @@ public class PlayerAccountData : ISaveLoad
         SfxVolume = saveData.sfxVolume;
         BestScore = saveData.bestScore;
         Coins = saveData.coins;
+        FrameRateFps = saveData.frameRateFps;
     }
 
 }
