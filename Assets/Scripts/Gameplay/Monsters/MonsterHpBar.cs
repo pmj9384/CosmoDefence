@@ -11,7 +11,7 @@ public class MonsterHpBar : MonoBehaviour
 
     [Header("점유 높이별 바 y (유저 실측 2026-07-07 — 프리팹에서 튜닝)")]
     [SerializeField] private float barY1x1 = -0.635f;
-    [SerializeField] private float barYTall = -1.1f;  // 세로 2칸(사슴)
+    [SerializeField] private float barYTall = -1.1f;  // 세로 2칸(드리프터)
 
     private const float DrainSpeed = 2.5f;   // 스르륵 줄어드는 속도(비율/초) — HUD 게이지와 감각 통일
 

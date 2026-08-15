@@ -970,25 +970,25 @@ MonoBehaviour:
   damagePopupPrefab: {fileID: 2443922786207449817, guid: b877207d77da14e5b954fcb7ef059597, type: 3}
   moveSpeed: 0.15
   types:
-  - typeName: Fluffy
+  - typeName: Mite
     bodySprite: {fileID: -2842281454074129482, guid: 33997d61b91084969aead04b41575ddd, type: 3}
     blockSprite: {fileID: -7139324324823140894, guid: 282ba0eaa30b345649889a834ec07e74, type: 3}
     hpMultiplier: 1
     width: 1
     height: 1
-  - typeName: Spider
+  - typeName: Crawler
     bodySprite: {fileID: -3438905571476058607, guid: 4ec7afbca94614cf4b573bac684e0c2e, type: 3}
     blockSprite: {fileID: -7139324324823140894, guid: 282ba0eaa30b345649889a834ec07e74, type: 3}
     hpMultiplier: 1
     width: 1
     height: 1
-  - typeName: ForestDeer
+  - typeName: Drifter
     bodySprite: {fileID: -8917190514560807785, guid: 80094bfb7288f4826b3039cd74e8712e, type: 3}
     blockSprite: {fileID: 3304401282157946629, guid: 6c8bbf6ebb14946a983ec92cd4c4f1e9, type: 3}
     hpMultiplier: 3
     width: 1
     height: 2
-  - typeName: StoneBug
+  - typeName: Bulwark
     bodySprite: {fileID: -8729781778048593179, guid: 92abaffc30527411c9596d38a16b6c5d, type: 3}
     blockSprite: {fileID: 1026569838529062140, guid: 9ee4745749ad643f2918a56655b69883, type: 3}
     hpMultiplier: 2.5

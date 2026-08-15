@@ -77,7 +77,7 @@ public class MonsterManager : InGameManager
         {
             if (!rowCells[col].IsUnit) continue;
             MonsterTypeData type = TypeFor(rowCells[col].code);
-            // 멀티셀: 앵커 칸 기준 점유 영역의 "중심" — 사슴(1×2)은 위로 반 칸, 돌벌레(2×1)는 오른쪽으로 반 칸
+            // 멀티셀: 앵커 칸 기준 점유 영역의 "중심" — 드리프터(1×2)은 위로 반 칸, 벌워크(2×1)는 오른쪽으로 반 칸
             Vector2 pos = fieldManager.CellToWorld(row, col)
                         + new Vector2(fieldManager.CellWidth * (type.width - 1) * 0.5f,
                                       fieldManager.CellHeight * (type.height - 1) * 0.5f);
@@ -120,7 +120,7 @@ public class MonsterManager : InGameManager
 
         MonsterMover mover = monster.GetComponent<MonsterMover>();
         // 정지선은 높이만큼 올린다 — MonsterMover는 rb.position(=중심)으로 바닥 도달을 판정하는데
-        // failY는 1×1 기준값이라, 세로로 긴 블록(사슴 1×2·보스 2×2)이 그대로 쓰면 (height-1)/2 칸만큼
+        // failY는 1×1 기준값이라, 세로로 긴 블록(드리프터 1×2·보스 2×2)이 그대로 쓰면 (height-1)/2 칸만큼
         // 판 바닥을 뚫고 내려간다. 스폰 좌표의 멀티셀 보정과 같은 식 (높이 1은 0이라 무변화).
         mover.Initialize(moveSpeed, failY + fieldManager.CellHeight * (type.height - 1) * 0.5f);
         if (reachedBottomHandler != null) mover.OnReachedBottom += reachedBottomHandler;
@@ -166,8 +166,8 @@ public class MonsterManager : InGameManager
     // 패턴 코드 → 타입: 숫자 코드는 배열 인덱스, 멀티셀 앵커는 이름 검색 (배열 순서 계약 회피)
     private MonsterTypeData TypeFor(int code)
     {
-        if (code == RowCell.DeerAnchor) return FindType("ForestDeer");
-        if (code == RowCell.StoneBugAnchor) return FindType("StoneBug");
+        if (code == RowCell.DrifterAnchor) return FindType("Drifter");
+        if (code == RowCell.BulwarkAnchor) return FindType("Bulwark");
         return types[code % types.Length];
     }
 

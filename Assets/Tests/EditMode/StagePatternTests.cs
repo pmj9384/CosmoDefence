@@ -15,10 +15,10 @@ public class StagePatternTests
     }
 
     [Test]
-    public void 돌벌레는_오른쪽_점유칸을_강제()
+    public void 벌워크는_오른쪽_점유칸을_강제()
     {
         var ok = StagePattern.Parse("B-.......", 9);
-        Assert.AreEqual(RowCell.StoneBugAnchor, ok.Rows[0][0].code);
+        Assert.AreEqual(RowCell.BulwarkAnchor, ok.Rows[0][0].code);
         Assert.AreEqual(1, ok.TotalUnits);         // 멀티셀도 1유닛
 
         Assert.Throws<FormatException>(() => StagePattern.Parse("B1.......", 9));
@@ -26,10 +26,10 @@ public class StagePatternTests
     }
 
     [Test]
-    public void 사슴은_다음_행_같은_칸_점유를_강제()
+    public void 드리프터는_다음_행_같은_칸_점유를_강제()
     {
         var ok = StagePattern.Parse("D........\n-.1......", 9);
-        Assert.AreEqual(RowCell.DeerAnchor, ok.Rows[0][0].code);
+        Assert.AreEqual(RowCell.DrifterAnchor, ok.Rows[0][0].code);
         Assert.AreEqual(2, ok.TotalUnits);
 
         Assert.Throws<FormatException>(() => StagePattern.Parse("D........\n1........", 9));  // 위 칸 침범
