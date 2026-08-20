@@ -1,11 +1,17 @@
 # 통통 디펜스 (TongTong Defence)
 
+[![tests](https://github.com/pmj9384/CosmoDefence/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/pmj9384/CosmoDefence/actions/workflows/test.yml)
+![Unity](https://img.shields.io/badge/Unity-6000.3.10-000000?logo=unity&logoColor=white)
+![Platform](https://img.shields.io/badge/platform-Android-3DDC84?logo=android&logoColor=white)
+
 > **통통 디펜스: 핀볼 마스터** 1스테이지 모작 (PurpleCow 채용 과제)<br>
 > Unity 6000.3.10 · Android(세로) · 개발 기간 7일 (6/30 화 ~ 7/7 화, 토요일 제외)
 
 > 플레이 영상: 제출물의 `TongTongDefence_play.mp4` (조작 → 웨이브 → 스킬 → 클리어/실패, 설명 자막 포함)
 
 몬스터를 향해 볼을 쏘아 튕기며 싸우는 핀볼 디펜스입니다. 원작 1스테이지의 핵심 루프인 발사, 물리 반사 전투, 레벨업 3택지, 스킬 성장, 웨이브, 결과 화면을 재현했습니다.
+
+**목차** — [실행 방법](#1-실행-방법) · [주요 구현 내용](#2-주요-구현-내용) · [검증을 재현하는 방법](#3-검증을-재현하는-방법) · [가산점 구현](#4-가산점-구현) · [AI 활용](#5-ai-활용) · [알려진 한계](#6-알려진-한계) · [프로젝트 구조](#7-프로젝트-구조)
 
 ---
 
