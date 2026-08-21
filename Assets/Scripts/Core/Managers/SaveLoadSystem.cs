@@ -40,7 +40,7 @@ public class SaveLoadSystem : PersistentMonoSingleton<SaveLoadSystem>
 
         var path = Path.Combine(SavePathDirectory, CurrentSaveFileName);
         var json = JsonConvert.SerializeObject(CurrentSaveData, settings);
-        // 원자적 저장: temp에 다 쓰고 rename — 저장 도중 프로세스 킬(모바일 스와이프킬·전원)에도
+        // 안전 저장: 임시 파일에 다 쓴 뒤 원본과 교체 — 저장 도중 앱이 죽어도(스와이프 종료·전원)
         // "완전한 옛 파일" 아니면 "완전한 새 파일"만 남는다. 직접 덮어쓰기는 반파손 파일을 만들 수 있음
         var tmpPath = path + ".tmp";
         File.WriteAllText(tmpPath, json);
