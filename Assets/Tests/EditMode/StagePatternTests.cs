@@ -15,7 +15,7 @@ public class StagePatternTests
     }
 
     [Test]
-    public void 벌워크는_오른쪽_점유칸을_강제()
+    public void 가로_블록은_오른쪽_점유칸을_강제()
     {
         var ok = StagePattern.Parse("B-.......", 9);
         Assert.AreEqual(RowCell.BulwarkAnchor, ok.Rows[0][0].code);
@@ -26,7 +26,7 @@ public class StagePatternTests
     }
 
     [Test]
-    public void 드리프터는_다음_행_같은_칸_점유를_강제()
+    public void 세로_블록은_다음_행_같은_칸_점유를_강제()
     {
         var ok = StagePattern.Parse("D........\n-.1......", 9);
         Assert.AreEqual(RowCell.DrifterAnchor, ok.Rows[0][0].code);

@@ -72,7 +72,7 @@ public class MonsterMover : MonoBehaviour
 
     // 자기 콜라이더 아래변 "폭 전체"를 BoxCast — 몬스터끼리는 물리 해소가 없어서(kinematic)
     // 감속된 앞 몬스터를 뒤가 파고들던 문제를 "이동 전 양보"로 해결 [가정: 원작도 겹치지 않고 대기].
-    // 중심 한 줄 Raycast였을 땐 폭 넓은 벌워크(2×1)가 자기 아래 1×1을 비껴 못 보고 밀고 내려감 (실기기 발견)
+    // 중심 한 줄 Raycast였을 땐 폭 넓은 가로 블록(2×1)가 자기 아래 1×1을 비껴 못 보고 밀고 내려감 (실기기 발견)
     private bool IsBlockedByFrontMonster()
     {
         Bounds b = body.bounds;
