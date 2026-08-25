@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // 몬스터 종류 정의 (Inspector 데이터) — 스프라이트/HP 배수/점유 크기.
-// 멀티셀(사슴 1×2, 돌벌레 2×1)은 블록 스프라이트 자체가 그 크기로 제작돼 있어(Block_1x2/2x1)
+// 멀티셀(세로 1×2, 가로 2×1)은 블록 스프라이트 자체가 그 크기로 제작돼 있어(Block_1x2/2x1)
 // 루트 균등 스케일 그대로 두고 콜라이더만 점유 칸에 맞춘다.
 [System.Serializable]
 public class MonsterTypeData

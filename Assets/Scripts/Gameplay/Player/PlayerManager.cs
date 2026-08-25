@@ -29,7 +29,11 @@ public class PlayerManager : InGameManager
         Health.OnDied -= HandleDied;
     }
 
-    public void TakeDamage(int damage) => Health.TakeDamage(damage);
+    public void TakeDamage(int damage)
+    {
+        Health.TakeDamage(damage);
+        SoundManager.Instance?.PlaySfx(SfxClipId.PlayerHit);
+    }
 
     private void HandleDied()
     {

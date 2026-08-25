@@ -1,31 +1,31 @@
 skillId,kind,level,ballDamage,a,b,c,displayName,description,icon
-FireBall,ActiveBall,1,21,4,3,8,파이어 볼,타격한 적을 불태워 지속 피해 (중첩),Sprites/Balls/BallSkills/Ball_Fire_ball
-FireBall,ActiveBall,2,24,4.5,4,10,파이어 볼,타격한 적을 불태워 지속 피해 (중첩),Sprites/Balls/BallSkills/Ball_Fire_ball
-FireBall,ActiveBall,3,27,5,5,12,파이어 볼,타격한 적을 불태워 지속 피해 (중첩),Sprites/Balls/BallSkills/Ball_Fire_ball
-IceBall,ActiveBall,1,25,0.3,5,0.1,아이스볼,확률로 적을 얼려 감속 + 받는 피해 증가,Sprites/Balls/BallSkills/Ball_Ice_Ball
-IceBall,ActiveBall,2,37,0.35,6,0.15,아이스볼,확률로 적을 얼려 감속 + 받는 피해 증가,Sprites/Balls/BallSkills/Ball_Ice_Ball
-IceBall,ActiveBall,3,50,0.4,7,0.2,아이스볼,확률로 적을 얼려 감속 + 받는 피해 증가,Sprites/Balls/BallSkills/Ball_Ice_Ball
+FireBall,ActiveBall,1,21,4,3,8,플라즈마 볼,명중한 적을 플라즈마로 지져 지속 피해 (중첩),Sprites/Balls/BallSkills/Ball_Fire_ball
+FireBall,ActiveBall,2,24,4.5,4,10,플라즈마 볼,명중한 적을 플라즈마로 지져 지속 피해 (중첩),Sprites/Balls/BallSkills/Ball_Fire_ball
+FireBall,ActiveBall,3,27,5,5,12,플라즈마 볼,명중한 적을 플라즈마로 지져 지속 피해 (중첩),Sprites/Balls/BallSkills/Ball_Fire_ball
+IceBall,ActiveBall,1,25,0.3,5,0.1,냉각 볼,확률로 적을 급속 냉각해 감속 + 받는 피해 증가,Sprites/Balls/BallSkills/Ball_Ice_Ball
+IceBall,ActiveBall,2,37,0.35,6,0.15,냉각 볼,확률로 적을 급속 냉각해 감속 + 받는 피해 증가,Sprites/Balls/BallSkills/Ball_Ice_Ball
+IceBall,ActiveBall,3,50,0.4,7,0.2,냉각 볼,확률로 적을 급속 냉각해 감속 + 받는 피해 증가,Sprites/Balls/BallSkills/Ball_Ice_Ball
 LaserBall,ActiveBall,1,11,7,0,0,레이저 볼(가로),같은 줄 전체에 레이저 피해,Sprites/Balls/BallSkills/Ball_Laser_Ball
 LaserBall,ActiveBall,2,15,11,0,0,레이저 볼(가로),같은 줄 전체에 레이저 피해,Sprites/Balls/BallSkills/Ball_Laser_Ball
 LaserBall,ActiveBall,3,19,15,0,0,레이저 볼(가로),같은 줄 전체에 레이저 피해,Sprites/Balls/BallSkills/Ball_Laser_Ball
-GhostBall,ActiveBall,1,14,0,0,0,고스트 볼,적을 관통하며 경로의 모든 적 타격,Sprites/Balls/BallSkills/Ball_Ghost_Ball
-GhostBall,ActiveBall,2,21,0,0,0,고스트 볼,적을 관통하며 경로의 모든 적 타격,Sprites/Balls/BallSkills/Ball_Ghost_Ball
-GhostBall,ActiveBall,3,28,0,0,0,고스트 볼,적을 관통하며 경로의 모든 적 타격,Sprites/Balls/BallSkills/Ball_Ghost_Ball
-ClusterBall,ActiveBall,1,27,0.4,10,0,클러스터 볼,타격 시 확률로 파편볼 생성,Sprites/Balls/BallSkills/Ball_Cluster_Ball
-ClusterBall,ActiveBall,2,30,0.5,15,0,클러스터 볼,타격 시 확률로 파편볼 생성,Sprites/Balls/BallSkills/Ball_Cluster_Ball
-ClusterBall,ActiveBall,3,33,0.6,20,0,클러스터 볼,타격 시 확률로 파편볼 생성,Sprites/Balls/BallSkills/Ball_Cluster_Ball
-TinHeart,Passive,1,0,0.2,0,0,따뜻한 양철 심장,노멀볼 피해 증가,Sprites/UI/icon_passive_3000
-TinHeart,Passive,2,0,0.3,0,0,따뜻한 양철 심장,노멀볼 피해 증가,Sprites/UI/icon_passive_3000
-TinHeart,Passive,3,0,0.4,0,0,따뜻한 양철 심장,노멀볼 피해 증가,Sprites/UI/icon_passive_3000
-MagicMirror,Passive,1,0,0.2,0,0,마법 거울,벽 반사마다 다음 타격 피해 증가,Sprites/UI/icon_passive_3002
-MagicMirror,Passive,2,0,0.4,0,0,마법 거울,벽 반사마다 다음 타격 피해 증가,Sprites/UI/icon_passive_3002
-MagicMirror,Passive,3,0,0.6,0,0,마법 거울,벽 반사마다 다음 타격 피해 증가,Sprites/UI/icon_passive_3002
-AmethystDagger,Passive,1,0,0.1,0,0,자수정 단검,정면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3003
-AmethystDagger,Passive,2,0,0.2,0,0,자수정 단검,정면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3003
-AmethystDagger,Passive,3,0,0.3,0,0,자수정 단검,정면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3003
-EmeraldDagger,Passive,1,0,0.2,0,0,에메랄드 단검,후면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3006
-EmeraldDagger,Passive,2,0,0.3,0,0,에메랄드 단검,후면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3006
-EmeraldDagger,Passive,3,0,0.4,0,0,에메랄드 단검,후면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3006
-LastMatch,Passive,1,0,10,0,0,마지막 성냥,적 처치 시 주변 폭발 피해,Sprites/UI/icon_passive_3007
-LastMatch,Passive,2,0,20,0,0,마지막 성냥,적 처치 시 주변 폭발 피해,Sprites/UI/icon_passive_3007
-LastMatch,Passive,3,0,30,0,0,마지막 성냥,적 처치 시 주변 폭발 피해,Sprites/UI/icon_passive_3007
+GhostBall,ActiveBall,1,14,0,0,0,위상 볼,적을 위상 통과하며 경로의 모든 적 타격,Sprites/Balls/BallSkills/Ball_Ghost_Ball
+GhostBall,ActiveBall,2,21,0,0,0,위상 볼,적을 위상 통과하며 경로의 모든 적 타격,Sprites/Balls/BallSkills/Ball_Ghost_Ball
+GhostBall,ActiveBall,3,28,0,0,0,위상 볼,적을 위상 통과하며 경로의 모든 적 타격,Sprites/Balls/BallSkills/Ball_Ghost_Ball
+ClusterBall,ActiveBall,1,27,0.4,10,0,클러스터 볼,명중 시 확률로 파편탄 생성,Sprites/Balls/BallSkills/Ball_Cluster_Ball
+ClusterBall,ActiveBall,2,30,0.5,15,0,클러스터 볼,명중 시 확률로 파편탄 생성,Sprites/Balls/BallSkills/Ball_Cluster_Ball
+ClusterBall,ActiveBall,3,33,0.6,20,0,클러스터 볼,명중 시 확률로 파편탄 생성,Sprites/Balls/BallSkills/Ball_Cluster_Ball
+TinHeart,Passive,1,0,0.2,0,0,리액터 코어,기본 볼 피해 증가,Sprites/UI/icon_passive_3000
+TinHeart,Passive,2,0,0.3,0,0,리액터 코어,기본 볼 피해 증가,Sprites/UI/icon_passive_3000
+TinHeart,Passive,3,0,0.4,0,0,리액터 코어,기본 볼 피해 증가,Sprites/UI/icon_passive_3000
+MagicMirror,Passive,1,0,0.2,0,0,반사 증폭기,벽 반사마다 다음 타격 피해 증가,Sprites/UI/icon_passive_3002
+MagicMirror,Passive,2,0,0.4,0,0,반사 증폭기,벽 반사마다 다음 타격 피해 증가,Sprites/UI/icon_passive_3002
+MagicMirror,Passive,3,0,0.6,0,0,반사 증폭기,벽 반사마다 다음 타격 피해 증가,Sprites/UI/icon_passive_3002
+AmethystDagger,Passive,1,0,0.1,0,0,정밀 조준기(전방),정면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3003
+AmethystDagger,Passive,2,0,0.2,0,0,정밀 조준기(전방),정면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3003
+AmethystDagger,Passive,3,0,0.3,0,0,정밀 조준기(전방),정면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3003
+EmeraldDagger,Passive,1,0,0.2,0,0,정밀 조준기(후방),후면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3006
+EmeraldDagger,Passive,2,0,0.3,0,0,정밀 조준기(후방),후면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3006
+EmeraldDagger,Passive,3,0,0.4,0,0,정밀 조준기(후방),후면 타격 치명타 확률 (적당 1회),Sprites/UI/icon_passive_3006
+LastMatch,Passive,1,0,10,0,0,폭발 반응로,적 처치 시 주변 폭발 피해,Sprites/UI/icon_passive_3007
+LastMatch,Passive,2,0,20,0,0,폭발 반응로,적 처치 시 주변 폭발 피해,Sprites/UI/icon_passive_3007
+LastMatch,Passive,3,0,30,0,0,폭발 반응로,적 처치 시 주변 폭발 피해,Sprites/UI/icon_passive_3007

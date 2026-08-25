@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 
-// 스테이지 행 패턴 (순수 C#) — CSV 한 줄 = 필드 한 행, 먼저 나온 행이 먼저(아래에) 스폰된다.
-// 칸 코드: '.'=빈칸  '1'..'9'=1×1 타입 인덱스  'D'=사슴 앵커(세로 1×2 — 다음 행 같은 칸이 '-')
-//          'B'=돌벌레 앵커(가로 2×1 — 같은 행 오른쪽 칸이 '-')  '-'=멀티셀 점유 예약(스폰 없음)
+// 웨이브 행 패턴 (순수 C#) — CSV 한 줄 = 필드 한 행, 먼저 나온 행이 먼저(아래에) 스폰된다.
+// 칸 코드: '.'=빈칸  '1'..'9'=1×1 타입 인덱스  'D'=세로 블록 앵커(1×2, Drifter — 다음 행 같은 칸이 '-')
+//          'B'=가로 블록 앵커(2×1, Bulwark — 같은 행 오른쪽 칸이 '-')  '-'=멀티셀 점유 예약(스폰 없음)
 // 원작 관찰(2026-07-07): 빈 행/빈 칸도 패턴의 일부, 매판 동일(결정적).
 public readonly struct RowCell
 {
     public const int Empty = -1;
-    public const int DeerAnchor = 100;    // 타입 인덱스는 소비자(MonsterManager)가 매핑
-    public const int StoneBugAnchor = 101;
+    public const int DrifterAnchor = 100;    // 타입 인덱스는 소비자(MonsterManager)가 매핑
+    public const int BulwarkAnchor = 101;
 
     public readonly int code;
     public RowCell(int code) => this.code = code;
@@ -35,7 +35,7 @@ public class StagePattern
     public static StagePattern Parse(string csv, int columns)
     {
         var rows = new List<RowCell[]>();
-        var pendingAbove = new HashSet<int>();   // 직전 행 사슴 앵커 열 — 이번 행 같은 열은 '-'여야 함
+        var pendingAbove = new HashSet<int>();   // 직전 행 세로 블록(D) 앵커 열 — 이번 행 같은 열은 '-'여야 함
 
         foreach (string raw in csv.Split('\n'))
         {
@@ -51,7 +51,7 @@ public class StagePattern
                 char ch = line[c];
                 bool mustBeOccupied = pendingAbove.Contains(c);
                 if (mustBeOccupied && ch != '-')
-                    throw new FormatException($"사슴(1×2) 위 칸이 비점유: 열 {c}, \"{line}\"");
+                    throw new FormatException($"D(세로 1×2) 위 칸이 비점유: 열 {c}, \"{line}\"");
 
                 switch (ch)
                 {
@@ -62,13 +62,13 @@ public class StagePattern
                         row[c] = new RowCell(RowCell.Empty);   // 점유 칸은 스폰 없음
                         break;
                     case 'D':
-                        row[c] = new RowCell(RowCell.DeerAnchor);
+                        row[c] = new RowCell(RowCell.DrifterAnchor);
                         deerCols.Add(c);
                         break;
                     case 'B':
                         if (c == columns - 1 || line[c + 1] != '-')
-                            throw new FormatException($"돌벌레(2×1) 오른쪽 칸이 '-'가 아님: 열 {c}, \"{line}\"");
-                        row[c] = new RowCell(RowCell.StoneBugAnchor);
+                            throw new FormatException($"B(가로 2×1) 오른쪽 칸이 '-'가 아님: 열 {c}, \"{line}\"");
+                        row[c] = new RowCell(RowCell.BulwarkAnchor);
                         break;
                     default:
                         if (ch < '1' || ch > '9')
@@ -82,7 +82,7 @@ public class StagePattern
         }
 
         if (pendingAbove.Count > 0)
-            throw new FormatException("마지막 행의 사슴(1×2) 위 칸 행이 없음");
+            throw new FormatException("마지막 행의 D(세로 1×2) 위 칸 행이 없음");
         if (rows.Count == 0)
             throw new FormatException("행이 하나도 없음");
         return new StagePattern(rows);

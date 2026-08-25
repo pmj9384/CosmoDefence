@@ -8,8 +8,9 @@ using UnityEngine.UI;
 public class InGameHud : UIElement
 {
     [Header("씬 참조 (TopBar 아래 조립됨)")]
-    [SerializeField] private Slider progressSlider;   // 진행도 게이지 (핸들 없는 Slider — HP와 방식 통일)
+    [SerializeField] private Slider progressSlider;   // 진행도 게이지 = 다음 보스까지 (핸들 없는 Slider)
     [SerializeField] private TMP_Text progressText;   // "N%"
+    [SerializeField] private TMP_Text scoreText;      // 점수 (가중: 잡몹10/보스100) — 씬에서 신규 연결
     [SerializeField] private Slider levelSlider;      // 레벨(킬) 게이지
     [SerializeField] private GameObject levelBadge;   // ◆ 다이아 (선택창 동안 함께 숨김)
     [SerializeField] private TMP_Text levelText;      // "Lv.N"
@@ -20,12 +21,14 @@ public class InGameHud : UIElement
     [SerializeField] private Color levelFullColor = new(0.9f, 0.25f, 0.15f);   // 꽉 참 = 빨강 (원작 레벨업 바)
 
     private int lastProgressPercent = -1;
+    private int lastScore = -1;
     private int lastLevel = -1;
     private int lastKillsIntoLevel = -1;
     private float progressTarget;
     private float levelTarget;
     private bool fillingToFull;   // 레벨업 연출: 게이지를 먼저 꽉 채우는 중
     private Image levelFill;      // 색 전환용 (Slider fillRect에서 획득)
+    private bool bossActive;      // 보스 동안 진행도·레벨 게이지 숨김 ↔ 보스 HP바 교대 (AnimalBreakOut 패턴)
 
     private void Start()   // 매니저 Initialize 완료 후 (관례)
     {
@@ -33,29 +36,60 @@ public class InGameHud : UIElement
         levelFill = levelSlider.fillRect.GetComponent<Image>();
     }
 
+    public override void Initialize()
+    {
+        gameManager.MonsterManager.OnBossSpawned += HandleBossSpawned;
+        gameManager.MonsterManager.OnBossEnded += HandleBossEnded;
+    }
+
+    private void OnDestroy()
+    {
+        if (gameManager == null || gameManager.MonsterManager == null) return;
+        gameManager.MonsterManager.OnBossSpawned -= HandleBossSpawned;
+        gameManager.MonsterManager.OnBossEnded -= HandleBossEnded;
+    }
+
+    private void HandleBossSpawned(Monster _) => bossActive = true;
+    private void HandleBossEnded() => bossActive = false;
+
     private void Update()
     {
         var skillManager = gameManager.SkillManager;
         var waveManager = gameManager.WaveManager;
         if (skillManager == null || skillManager.PlayerLevel == null) return;
 
-        // 스킬 선택 동안 HUD 레벨 UI 숨김 — 선택창의 꽉 찬 바가 그 자리를 대신함 (유저 확정: 겹침 대신 교대)
-        bool selecting = gameManager.CurrentState == GameManager.GameState.SkillSelection;
-        if (levelSlider.gameObject.activeSelf == selecting)
+        // 레벨 UI 숨김 = 스킬 선택(선택창 바가 대신) 또는 보스(보스 HP바와 교대 — 유저 확정 2026-07-15)
+        bool hideLevel = gameManager.CurrentState == GameManager.GameState.SkillSelection || bossActive;
+        if (levelSlider.gameObject.activeSelf == hideLevel)
         {
-            levelSlider.gameObject.SetActive(!selecting);
-            levelText.gameObject.SetActive(!selecting);
-            if (levelBadge != null) levelBadge.SetActive(!selecting);   // 배선 전이어도 나머지는 동작
+            levelSlider.gameObject.SetActive(!hideLevel);
+            levelText.gameObject.SetActive(!hideLevel);
+            if (levelBadge != null) levelBadge.SetActive(!hideLevel);   // 배선 전이어도 나머지는 동작
         }
 
-        // 진행도 = 처치 누계 ÷ 전체 몬스터 수 (ResultPanel의 Fail 지표와 같은 정의)
-        int total = waveManager.TotalMonsterCount;
-        int percent = total > 0 ? skillManager.PlayerLevel.TotalKills * 100 / total : 0;
+        // 진행도 게이지도 보스 동안 숨김 (보스까지 진행도가 어차피 0 — 자리는 보스 HP바가 사용)
+        if (progressSlider.gameObject.activeSelf == bossActive)
+        {
+            progressSlider.gameObject.SetActive(!bossActive);
+            progressText.gameObject.SetActive(!bossActive);
+        }
+
+        // 진행도 = 다음 보스까지 (무한모드: 유한 처치%는 오버슛하므로 보스 관문 카운트로 대체)
+        float bossProgress = waveManager.BossProgress;
+        int percent = Mathf.RoundToInt(bossProgress * 100);
         if (percent != lastProgressPercent)
         {
             lastProgressPercent = percent;
-            progressTarget = percent / 100f;
+            progressTarget = bossProgress;
             progressText.text = $"{percent}%";
+        }
+
+        // 점수 (가중) — StatsManager가 SSOT. 값 바뀐 프레임에만 할당(GC 회피)
+        StatsManager stats = gameManager.StatsManager;
+        if (scoreText != null && stats != null && stats.Score != null && stats.Score.Current != lastScore)
+        {
+            lastScore = stats.Score.Current;
+            scoreText.text = $"Score: {stats.Score.Current:N0}";   // 라벨 포함 — 숫자만 있으면 뭔지 안 읽힘 (유저 2026-07-27)
         }
 
         // 레벨 게이지 = 다음 레벨까지의 킬 진행 [가정A]
@@ -70,7 +104,7 @@ public class InGameHud : UIElement
             lastKillsIntoLevel = level.KillsIntoLevel;
             levelText.text = $"Lv.{level.Level}";
         }
-        levelTarget = fillingToFull ? 1f : (float)level.KillsIntoLevel / level.KillsToNext;
+        levelTarget = fillingToFull ? 1f : (float)level.KillsIntoLevel / Mathf.Max(1, level.KillsToNext);
 
         // 부드럽게 차오르는 연출 (원작) — 목표값은 즉시, 표시는 보간
         progressSlider.value = Mathf.MoveTowards(progressSlider.value, progressTarget, gaugeFillSpeed * Time.deltaTime);

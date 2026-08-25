@@ -45,6 +45,30 @@ public class FieldManager : InGameManager
         TopWall = bg.min.y + fieldRectInBackground.yMax * bg.size.y;
 
         CreateWallColliders();
+        CreateFieldBoard();
+    }
+
+    // 필드 보드 — 배경(순수 우주) 위, 몬스터/볼 아래에 깔리는 격자판.
+    // 그림에 좌표를 박으면 stretch/화면비로 어긋나므로, 벽처럼 코드가 생성해
+    // 필드 rect(LeftWall~RightWall × BottomWall~TopWall)에 정확히 맞춘다 → 논리 격자와 100% 정렬.
+    [SerializeField] private string fieldBoardResource = "Sprites/UI/FieldBoard";
+
+    private void CreateFieldBoard()
+    {
+        Sprite sprite = Resources.Load<Sprite>(fieldBoardResource);
+        if (sprite == null) return;
+
+        var go = new GameObject("FieldBoard");
+        go.transform.SetParent(transform);
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = sprite;
+        sr.sortingOrder = -9;   // 배경(-10) 위, 몬스터/볼(0) 아래
+
+        go.transform.position = new Vector3((LeftWall + RightWall) * 0.5f,
+                                            (TopWall + BottomWall) * 0.5f, 0f);
+        Vector2 baseSize = sprite.bounds.size;   // 스케일 1 기준 크기
+        go.transform.localScale = new Vector3((RightWall - LeftWall) / baseSize.x,
+                                              (TopWall - BottomWall) / baseSize.y, 1f);
     }
 
     // 배경을 화면(카메라 rect)에 정확히 맞춤 — 가로/세로 독립 배율(stretch fill).
@@ -73,6 +97,8 @@ public class FieldManager : InGameManager
     // 반사 벽(좌/우/상)을 판 가장자리보다 바깥으로 미는 여유 — 반사 공간 확보용.
     // 격자/몬스터 좌표는 불변, 벽만 밀림. Play 보며 인스펙터 튜닝.
     [SerializeField] private float wallPadding = 0.15f;
+
+    public float WallPadding => wallPadding;   // 조준선 반사점 당김이 같은 값을 써야 함 (SSOT — 검수 v6)
 
     private void CreateWallColliders()
     {

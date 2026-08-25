@@ -1,0 +1,11 @@
+SkinId,SkinName,Grade,GachaRate,IsDefault
+Common_Rookie,Rookie Pilot,Common,0.15,true
+Common_Cadet,Space Cadet,Common,0.15,false
+Common_Engineer,Engineer,Common,0.15,false
+Common_Navigator,Navigator,Common,0.15,false
+Rare_Ranger,Star Ranger,Rare,0.10,false
+Rare_Bounty,Bounty Hunter,Rare,0.10,false
+Rare_Cyborg,Cyborg,Rare,0.10,false
+Epic_Alien,Alien Ace,Epic,0.05,false
+Epic_Phantom,Void Phantom,Epic,0.025,false
+Epic_Captain,Galaxy Captain,Epic,0.025,false

@@ -1,0 +1,113 @@
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using UnityCommunity.UnitySingleton;
+using UnityEngine;
+using SaveDataVC = SaveDataV1;
+
+public class SaveLoadSystem : PersistentMonoSingleton<SaveLoadSystem>
+{
+    public static int SaveDataVersion { get; private set; } = 1;
+
+    public SaveDataVC CurrentSaveData { get; set; }
+
+    public static string CurrentSaveFileName => "SaveFile.json";
+
+    public static string SavePathDirectory => $"{Application.persistentDataPath}/Save";
+
+    public Action onApplicationQuitSave;
+
+    public override void InitializeSingleton()
+    {
+        base.InitializeSingleton();
+        CurrentSaveData = new();
+    }
+
+    // TypeNameHandling.All 제거 (2026-07-30): $type으로 클래스명이 파일에 박제되면 리네임=옛 세이브 로드 실패.
+    // 구체 타입(SaveDataVC)으로 역직렬화하므로 타입 정보가 파일에 있을 필요 없음 — 버전 판별은 Version 필드 몫.
+    // 옛 파일의 $type 잔재는 Json.NET이 모르는 멤버로 무시해 그대로 호환된다 (실측 확인).
+    private static JsonSerializerSettings settings = new JsonSerializerSettings
+    {
+        Formatting = Formatting.Indented,
+    };
+
+    public void Save()
+    {
+        OnApplicationQuitSave();
+
+        if (!Directory.Exists(SavePathDirectory))
+            Directory.CreateDirectory(SavePathDirectory);
+
+        var path = Path.Combine(SavePathDirectory, CurrentSaveFileName);
+        var json = JsonConvert.SerializeObject(CurrentSaveData, settings);
+        // 안전 저장: 임시 파일에 다 쓴 뒤 원본과 교체 — 저장 도중 앱이 죽어도(스와이프 종료·전원)
+        // "완전한 옛 파일" 아니면 "완전한 새 파일"만 남는다. 직접 덮어쓰기는 반파손 파일을 만들 수 있음
+        var tmpPath = path + ".tmp";
+        File.WriteAllText(tmpPath, json);
+        if (File.Exists(path)) File.Replace(tmpPath, path, null);
+        else File.Move(tmpPath, path);
+    }
+
+    public void Load()
+    {
+        var path = Path.Combine(SavePathDirectory, CurrentSaveFileName);
+
+        if (!File.Exists(path))
+        {
+            Debug.Log($"Save file not found, using defaults.");
+            return;
+        }
+
+        // 파손 파일 방어: 로드 실패가 부팅 크래시로 번지지 않게 기본값 폴백 — 깨진 파일은 재시작해도
+        // 그대로 남아 "영구 진입 불가"가 되는 게 최악이라, 새 게임으로라도 켜지는 걸 보장한다.
+        // 파일은 지우지 않고 다음 Save 때 정상본으로 덮인다
+        try
+        {
+            var json = File.ReadAllText(path);
+            var saveData = JsonConvert.DeserializeObject<SaveDataVC>(json, settings);
+            if (saveData == null) throw new JsonException("역직렬화 결과 null");
+
+            while (saveData.Version < SaveDataVersion)
+            {
+                int before = saveData.Version;
+                saveData = (SaveDataVC)saveData.VersionUp();
+                if (saveData.Version <= before)   // 이사 구현이 버전을 안 올리면 무한루프 — 시끄럽게 탈출
+                    throw new InvalidOperationException($"VersionUp이 버전을 올리지 않음 (v{before})");
+            }
+
+            CurrentSaveData = saveData;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[SaveLoad] 세이브 로드 실패 — 기본값으로 시작: {e.Message}");
+            // 부검 단서: 실패 시점의 파일 상태를 남긴다 — 20:27 원인미상 null 로드 1건(2026-07-30)이
+            // 정상 파일로 덮여 부검 불가였던 재발 방지. 파일 길이 0 = 빈 파일 생성 경로가 존재한다는 뜻
+            try { Debug.LogError($"[SaveLoad] 부검: 파일 {new FileInfo(path).Length} bytes, 머리 80자: {File.ReadAllText(path).Substring(0, Math.Min(80, File.ReadAllText(path).Length))}"); }
+            catch { /* 부검 실패는 침묵 — 원본 에러가 우선 */ }
+            CurrentSaveData = new SaveDataVC();
+        }
+    }
+
+    private void OnApplicationQuitSave()
+    {
+        onApplicationQuitSave?.Invoke();
+    }
+
+    public void RegisterOnSaveAction(ISaveLoad target)
+    {
+        onApplicationQuitSave += target.Save;
+    }
+
+    private void OnApplicationQuit()
+    {
+        Save();
+    }
+
+#if !UNITY_EDITOR
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+            Save();
+    }
+#endif
+}

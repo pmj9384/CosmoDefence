@@ -40,6 +40,14 @@ public class PlayerSkills
         return true;
     }
 
+    // 보유 스킬의 현재 레벨 a값 — 미보유는 0 (효과 없음과 등가라 호출측의 보유 분기가 사라진다).
+    // 레벨과 테이블을 둘 다 아는 곳은 여기뿐이라 이 조회의 정위치 (SkillManager에서 이사)
+    public float PassiveValue(SkillId id)
+    {
+        int level = GetLevel(id);
+        return level == 0 ? 0f : table[id].GetLevel(level).a;
+    }
+
     public IEnumerable<SkillId> Owned(SkillKind kind)
     {
         foreach (SkillId id in levels.Keys)

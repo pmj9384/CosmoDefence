@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "mcp-unity": {
-      "command": "node",
-      "args": ["/Users/minjaepark/unity/TongTongDefence/Library/PackageCache/com.gamelovers.mcp-unity@c523d75b086d/Server~/build/index.js"]
+    "unity-mcp": {
+      "command": "/Users/minjaepark/.unity/relay/relay_mac_arm64.app/Contents/MacOS/relay_mac_arm64",
+      "args": ["--mcp"]
     }
   }
 }

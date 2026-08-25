@@ -1,0 +1,38 @@
+# TongTongDefence 코드 스타일 — 실측 성문화 (2026-07-20)
+# 근거: 유저 손코딩(AnimalBreakOut 인게임)과 현행 코드 실측 — 스페이스4 · Allman · camelCase 필드
+root = true
+
+[*]
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.cs]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+
+# 중괄호는 새 줄 (Allman) — "if 하고 {}를 밑에"
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+
+# 제어문 키워드 뒤 공백: if (
+csharp_space_after_keywords_in_control_flow_statements = true
+
+# var 허용 (실측: 자유 사용)
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = true:suggestion
+
+# 네이밍: private 필드 camelCase (언더스코어 프리픽스 없음 — 실측 0건)
+dotnet_naming_rule.private_fields_camel.severity = suggestion
+dotnet_naming_rule.private_fields_camel.symbols = private_fields
+dotnet_naming_rule.private_fields_camel.style = camel_style
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_style.camel_style.capitalization = camel_case
+
+[*.{json,asmdef}]
+indent_style = space
+indent_size = 2

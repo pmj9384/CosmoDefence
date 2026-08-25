@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b0bb5b8abe8c4216967826708e8a73e, type: 3}
+  m_Name: SkillIconTable
+  m_EditorClassIdentifier: Assembly-CSharp::SkillIconTable
+  entries:
+  - id: 0
+    sprite: {fileID: 21300000, guid: 9c4c9ad09b65c4875b6b69cef55674bf, type: 3}
+  - id: 1
+    sprite: {fileID: 21300000, guid: ac952e27f728f40b1bb9fe959518b3ae, type: 3}
+  - id: 2
+    sprite: {fileID: 21300000, guid: a832da230112c4d03a3945e357130bfa, type: 3}
+  - id: 3
+    sprite: {fileID: 21300000, guid: c437e67af18b04fdb81bf4401b64d125, type: 3}
+  - id: 4
+    sprite: {fileID: 21300000, guid: 340ecd78394194580a455ef3c382da3a, type: 3}
+  - id: 5
+    sprite: {fileID: -2705430156882675895, guid: d1cf239754bf34722a0c8ba0afd71acf, type: 3}
+  - id: 6
+    sprite: {fileID: -6616691536047042522, guid: 0f885826a161f4dfb84ad7043a2cf21b, type: 3}
+  - id: 7
+    sprite: {fileID: -7508988934101286666, guid: 56c7dfde4afc846688325fed393cdaf1, type: 3}
+  - id: 8
+    sprite: {fileID: -4751796939026496796, guid: 32a57aa8a73884f40b9b94674d4fca51, type: 3}
+  - id: 9
+    sprite: {fileID: 933059483129848996, guid: bfa2e8ad6384d4399afb71d91d55cad5, type: 3}
+  - id: 10
+    sprite: {fileID: 21300000, guid: 02cb2d8d3ab96492fb183b2e29f3e8f8, type: 3}

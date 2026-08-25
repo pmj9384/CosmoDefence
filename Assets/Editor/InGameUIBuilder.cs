@@ -12,7 +12,7 @@ public static class InGameUIBuilder
     private static TMP_FontAsset font;
 
     // 조준선을 점선+끝점 조준점으로 (원작 관찰) — 기존 파츠 눈튜닝을 건드리지 않는 별도 메뉴
-    [MenuItem("Tools/Build Aim Line (점선+조준점)")]
+    [MenuItem("Tools/InGame UI 빌더/Build Aim Line (점선+조준점)")]
     public static void BuildAimLine()
     {
         var shooter = Object.FindFirstObjectByType<Shooter>(FindObjectsInactive.Include);
@@ -60,7 +60,7 @@ public static class InGameUIBuilder
     }
 
     // 플레이어 월드 HP바 조립 (원작 #84 발밑 캡슐 — 몬스터 HpBar와 동일 문법) + 캔버스 슬라이더 은퇴
-    [MenuItem("Tools/Build Player HpBar (월드)")]
+    [MenuItem("Tools/InGame UI 빌더/Build Player HpBar (월드)")]
     public static void BuildPlayerWorldHpBar()
     {
         font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
@@ -106,7 +106,7 @@ public static class InGameUIBuilder
     }
 
     // 전투 정보 창 조립 (원작 #57) — SafeAreaPanel 아래 패널 생성 + 행 7개 + 참조 자동 할당
-    [MenuItem("Tools/Build CombatInfo Panel")]
+    [MenuItem("Tools/InGame UI 빌더/Build CombatInfo Panel")]
     public static void BuildCombatInfoPanel()
     {
         font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
@@ -125,10 +125,8 @@ public static class InGameUIBuilder
         closeBtn.targetGraphic = overlay.GetComponent<UnityEngine.UI.Image>();
         closeBtn.transition = Selectable.Transition.None;
 
+        // 스테이지 라벨·진행도 없음 — 무한 모드라 스테이지 개념이 없고, 진행도는 HUD가 이미 표시 (2026-08-03 유저 확정)
         Text(overlay, "Title", "전투 정보", 56, F(0.90f), Vector2.zero, new(640, 80), color: new Color(1f, 0.85f, 0.5f));
-        Text(overlay, "Stage", "Stage 1  (Normal)", 32, F(0.83f), Vector2.zero, new(640, 50), color: new Color(0.6f, 0.8f, 1f));
-        var pSlider = SliderGauge(overlay, "ProgressSlider", new Color(0.85f, 0.22f, 0.18f), F(0.78f), Vector2.zero, new(420, 20));
-        var pText = Text(overlay, "ProgressText", "0%", 20, F(0.78f), Vector2.zero, new(420, 26), bold: true);
         Text(overlay, "CloseHint", "터치하여 닫기", 26, F(0.05f), Vector2.zero, new(400, 40), color: new Color(0.6f, 0.6f, 0.6f));
 
         const int RowCount = 7;
@@ -157,8 +155,7 @@ public static class InGameUIBuilder
             dpss[i] = Text(row, "Dps", "0", 36, C, new(330, -14), new(150, 44), bold: true);
         }
 
-        Assign(panel, ("overlay", overlay.gameObject), ("closeButton", closeBtn),
-                      ("progressText", pText), ("progressSlider", pSlider));
+        Assign(panel, ("overlay", overlay.gameObject), ("closeButton", closeBtn));
         AssignArray(panel, "rows", rows);
         AssignArray(panel, "icons", icons);
         AssignArray(panel, "levels", levels);
@@ -173,7 +170,7 @@ public static class InGameUIBuilder
     }
 
     // 캐릭터 파츠 조립(조준 연출용)
-    [MenuItem("Tools/Build Shooter Parts + Move HpBar")]
+    [MenuItem("Tools/InGame UI 빌더/Build Shooter Parts + Move HpBar")]
     public static void BuildShooterParts()
     {
         var shooter = Object.FindFirstObjectByType<Shooter>(FindObjectsInactive.Include);
@@ -232,7 +229,7 @@ public static class InGameUIBuilder
     }
 
     // 데미지 팝업 프리팹 생성 + 씬 MonsterManager에 연결 (TMP는 손 YAML 금지 규약 → 에디터 API로)
-    [MenuItem("Tools/Build DamagePopup Prefab")]
+    [MenuItem("Tools/InGame UI 빌더/Build DamagePopup Prefab")]
     public static void BuildDamagePopupPrefab()
     {
         var kostar = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
@@ -264,7 +261,7 @@ public static class InGameUIBuilder
         Debug.Log("[InGameUIBuilder] DamagePopup.prefab 생성 + MonsterManager 연결 완료 — 씬 저장하세요");
     }
 
-    [MenuItem("Tools/Build InGame UI (1회 실행)")]
+    [MenuItem("Tools/InGame UI 빌더/Build InGame UI (1회 실행)")]
     public static void Build()
     {
         font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
@@ -289,7 +286,7 @@ public static class InGameUIBuilder
     }
 
     // HUD만 재조립 (다른 패널의 눈튜닝 보존용 별도 메뉴)
-    [MenuItem("Tools/Build HUD Only (게이지 Slider 통일)")]
+    [MenuItem("Tools/InGame UI 빌더/Build HUD Only (게이지 Slider 통일)")]
     public static void BuildHudOnly()
     {
         font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");
@@ -307,8 +304,6 @@ public static class InGameUIBuilder
         Clear(hud.transform);
         hud.transform.SetParent(topBar, false);
         Stretch((RectTransform)hud.transform);
-
-        Text(hud.transform, "StageName", "1. 깊은 숲", 42, new(0.5f, 1f), new(0, -32), new(520, 54), bold: true);
 
         var pSlider = SliderGauge(hud.transform, "ProgressSlider", new Color(0.85f, 0.22f, 0.18f),
                                   new(0.5f, 1f), new(0, -66), new(400, 22));
@@ -351,7 +346,7 @@ public static class InGameUIBuilder
 
     // ── 일시정지 (원작 #36 비율) ─────────────────────────────────
     // 퍼즈 "슬롯 6개만" 새 구조로 교체 — 위치는 기존(유저 튜닝) 그대로, 다른 오브젝트(유저 제작 포함) 불변
-    [MenuItem("Tools/Build Pause Only (슬롯만 교체)")]
+    [MenuItem("Tools/InGame UI 빌더/Build Pause Only (슬롯만 교체)")]
     public static void BuildPauseOnly()
     {
         var pause = Object.FindFirstObjectByType<PausePanel>(FindObjectsInactive.Include);
@@ -397,8 +392,8 @@ public static class InGameUIBuilder
         Clear(pause.transform);
         var overlay = Overlay(pause.transform, 0.9f);
 
+        // Stage 라벨 없음 — 갱신 코드 없는 정적 문구가 "Stage 1" 거짓 표시를 하던 것 제거 (2026-08-03 유저 확정)
         Text(overlay, "Title", "일시정지", 76, F(0.87f), Vector2.zero, new(640, 90), color: new Color(1f, 0.9f, 0.6f));
-        Text(overlay, "Stage", "Stage 1  (Normal)", 34, F(0.78f), Vector2.zero, new(640, 60), color: new Color(0.6f, 0.8f, 1f));
         var combat = ButtonBox(overlay, "CombatInfoButton", "il", 26, new Color(0.3f, 0.32f, 0.38f), F(0.78f), new(240, 0), new(52, 52));
 
         Text(overlay, "ActiveLabel", "Active Skill", 28, F(0.665f), new(-250, 0), new(400, 40), color: new Color(1f, 0.6f, 0.55f));
@@ -426,8 +421,8 @@ public static class InGameUIBuilder
         var overlay = Overlay(result.transform, 0.75f);
         var panel = Image(overlay, "Panel", new Color(0.13f, 0.12f, 0.16f, 0.97f), C, Vector2.zero, new(520, 480)).transform;
 
-        var title = Text(panel, "Title", "Stage Fail", 60, C, new(0, 140), new(480, 80), color: new Color(1f, 0.85f, 0.4f));
-        Text(panel, "Stage", "Stage 1  (Normal)", 30, C, new(0, 60), new(480, 50), color: new Color(0.6f, 0.8f, 1f));
+        // 플레이스홀더도 런타임과 동일한 "Game Over"로 — Stage 라벨은 무한모드라 제거 (검수 v5 #9와 정합)
+        var title = Text(panel, "Title", "Game Over", 60, C, new(0, 140), new(480, 80), color: new Color(1f, 0.85f, 0.4f));
         var info = Text(panel, "Info", "", 34, C, new(0, -10), new(480, 60));
         var restart = ButtonBox(panel, "RestartButton", "다시 시작", 36, new Color(0.95f, 0.65f, 0.2f), C, new(0, -150), new(300, 88), boldLabel: true);
 
@@ -436,7 +431,7 @@ public static class InGameUIBuilder
     }
 
     // 선택창만 재조립 (다른 패널 눈튜닝 보존용 별도 메뉴)
-    [MenuItem("Tools/Build Selection Panel (원작 레이아웃)")]
+    [MenuItem("Tools/InGame UI 빌더/Build Selection Panel (원작 레이아웃)")]
     public static void BuildSelectionOnly()
     {
         font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Font/Kostar SDF 2.asset");

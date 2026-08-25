@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(python3 -c 'import sys,json;print(json.load(sys.stdin).get(\"tool_input\",{}).get(\"file_path\") or \"\")'); case \"$f\" in *.cs) case \"$f\" in */Plugins/*) ;; *) dotnet format whitespace \"$CLAUDE_PROJECT_DIR\" --folder --include \"${f#\"$CLAUDE_PROJECT_DIR\"/}\" 2>/dev/null || true;; esac;; esac",
+            "timeout": 30,
+            "statusMessage": "포맷 정리 중 (dotnet format)"
+          }
+        ]
+      }
+    ]
+  }
+}

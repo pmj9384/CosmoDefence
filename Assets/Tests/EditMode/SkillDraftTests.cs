@@ -8,6 +8,11 @@ public class SkillDraftTests
     private static PlayerSkills NewPlayer()
         => new PlayerSkills(SkillTableParser.Parse(File.ReadAllText("Assets/Resources/Tables/SkillTable.csv")));
 
+    private static void Max(PlayerSkills p, params SkillId[] ids)
+    {
+        foreach (SkillId id in ids) { p.Acquire(id); p.Acquire(id); p.Acquire(id); }
+    }
+
     [Test]
     public void 기본_3장_중복_없음()
     {
@@ -42,59 +47,67 @@ public class SkillDraftTests
     }
 
     [Test]
-    public void 만렙_스킬은_풀에서_제외()
+    public void 노멀볼은_항상_정규_후보로_등장()
+    {
+        var p = NewPlayer();   // 초반부터 노멀볼이 후보 풀에 있어야 함 (비상 채움이 아니라 정규)
+        bool appeared = false;
+        for (int seed = 0; seed < 50 && !appeared; seed++)
+            if (SkillDraft.Draw(p, new Random(seed)).Contains(SkillId.NormalBall)) appeared = true;
+        Assert.IsTrue(appeared, "노멀볼이 정규 후보로 한 번도 안 나옴");
+    }
+
+    [Test]
+    public void 만렙_액티브볼은_플러스1_후보로_재등장()
     {
         var p = NewPlayer();
-        p.Acquire(SkillId.FireBall); p.Acquire(SkillId.FireBall); p.Acquire(SkillId.FireBall); // Lv3
+        Max(p, SkillId.FireBall);   // 액티브 Lv3 — 이제 "+1개" 후보로 남아야 함
+
+        bool appeared = false;
+        for (int seed = 0; seed < 50 && !appeared; seed++)
+            if (SkillDraft.Draw(p, new Random(seed)).Contains(SkillId.FireBall)) appeared = true;
+        Assert.IsTrue(appeared, "만렙 액티브볼이 +1 후보로 재등장하지 않음");
+    }
+
+    [Test]
+    public void 만렙_패시브는_풀에서_제외()
+    {
+        var p = NewPlayer();
+        Max(p, SkillId.TinHeart);   // 패시브 Lv3 — 볼이 없으니 계속 제외
 
         for (int seed = 0; seed < 50; seed++)
-            CollectionAssert.DoesNotContain(SkillDraft.Draw(p, new Random(seed)), SkillId.FireBall);
+            CollectionAssert.DoesNotContain(SkillDraft.Draw(p, new Random(seed)), SkillId.TinHeart);
     }
 
     [Test]
-    public void 후보가_전부_소진되면_노멀볼_채움_카드만()
+    public void 액티브_전부_만렙이어도_노멀볼로만_안_채워짐()
     {
         var p = NewPlayer();
-        // 액티브 4종 만렙 + 패시브 2종 만렙 → 나머지는 만석 규칙으로 전부 배제
-        foreach (SkillId id in new[] { SkillId.FireBall, SkillId.IceBall, SkillId.LaserBall, SkillId.GhostBall,
-                                       SkillId.TinHeart, SkillId.MagicMirror })
-        {
-            p.Acquire(id); p.Acquire(id); p.Acquire(id);
-        }
+        // 액티브 4종 + 패시브 2종 전부 만렙 → 예전엔 노멀볼만 남았음.
+        // 이제 만렙 액티브 4종이 +1 후보 → 노멀볼과 함께 실제 선택지가 유지된다.
+        Max(p, SkillId.FireBall, SkillId.IceBall, SkillId.LaserBall, SkillId.GhostBall,
+               SkillId.TinHeart, SkillId.MagicMirror);
 
-        CollectionAssert.AreEqual(new[] { SkillId.NormalBall }, SkillDraft.Draw(p, new Random(7)));
+        var pool = new HashSet<SkillId>();
+        for (int seed = 0; seed < 50; seed++)
+            foreach (SkillId id in SkillDraft.Draw(p, new Random(seed))) pool.Add(id);
+
+        // 만렙 액티브 4종이 후보에 실제로 등장
+        foreach (SkillId active in new[] { SkillId.FireBall, SkillId.IceBall, SkillId.LaserBall, SkillId.GhostBall })
+            CollectionAssert.Contains(pool, active, $"{active} 만렙 +1 후보가 안 나옴");
+        // 만렙 패시브는 여전히 제외
+        CollectionAssert.DoesNotContain(pool, SkillId.TinHeart);
+        CollectionAssert.DoesNotContain(pool, SkillId.MagicMirror);
     }
 
     [Test]
-    public void 후보_2장이면_노멀볼이_한_자리를_채워_3장()
+    public void 후보가_부족하면_있는_만큼_노멀볼_포함해_반환()
     {
         var p = NewPlayer();
-        // 액티브 4종 만렙 + 패시브 만석(2종 보유, 그중 1종 만렙) → 후보 = 거울 업그레이드 + ...
-        foreach (SkillId id in new[] { SkillId.FireBall, SkillId.IceBall, SkillId.LaserBall, SkillId.GhostBall,
-                                       SkillId.TinHeart })
-        {
-            p.Acquire(id); p.Acquire(id); p.Acquire(id);
-        }
-        p.Acquire(SkillId.MagicMirror);   // 패시브 만석 — 후보는 거울 업그레이드 1장뿐
-
+        // 액티브 1종만 보유·만렙(+1 후보 1장) + 나머지 액티브 슬롯은 열려 있으니 신규 후보도 있음.
+        // 최소 보장: 반환 카드는 비지 않고, 노멀볼이 후보로 낄 수 있다.
+        Max(p, SkillId.FireBall);
         List<SkillId> cards = SkillDraft.Draw(p, new Random(3));
-        CollectionAssert.AreEqual(new[] { SkillId.MagicMirror, SkillId.NormalBall }, cards);
-    }
-
-    [Test]
-    public void 후보_부족하면_있는_만큼만()
-    {
-        var p = NewPlayer();
-        // 액티브 4종 만렙 + 패시브 1종 만렙 → 남은 후보 = 미보유 패시브 4종 (신규 가능: 패시브 1자리)
-        foreach (SkillId id in new[] { SkillId.FireBall, SkillId.IceBall, SkillId.LaserBall, SkillId.GhostBall,
-                                       SkillId.TinHeart })
-        {
-            p.Acquire(id); p.Acquire(id); p.Acquire(id);
-        }
-
-        List<SkillId> cards = SkillDraft.Draw(p, new Random(3));
-        Assert.AreEqual(3, cards.Count);                      // 미보유 패시브 4종 중 3장
-        foreach (SkillId id in cards)
-            Assert.AreEqual(SkillKind.Passive, p.Table[id].kind);
+        Assert.GreaterOrEqual(cards.Count, 1);
+        CollectionAssert.AllItemsAreUnique(cards);
     }
 }

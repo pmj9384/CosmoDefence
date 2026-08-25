@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
         GameStop,
         SkillSelection,   // 3택지 스킬 선택 — 게임 완전 정지 (원작 관찰 확정)
         GameOver,
-        GameClear,
         Max,
     }
 
@@ -25,7 +24,6 @@ public class GameManager : MonoBehaviour
     private GameState previousState;
     private GameState currentState;
     public GameState CurrentState => currentState;
-    public GameState PreviousState => previousState;
 
     private float previousStopTimeScale;
 
@@ -41,19 +39,19 @@ public class GameManager : MonoBehaviour
     public SkillManager SkillManager { get; private set; }
     public PlayerManager PlayerManager { get; private set; }
     public StatsManager StatsManager { get; private set; }
-    // TODO: 게임별 매니저 추가
 
     #endregion
 
     private void Awake()
     {
-        SetInitialSettings();
         InitializeStateActions();
         InitializeCoreManagers();
         SetGameState(GameState.WaitLoading);
 
-        // TEMP: 아웃게임 씬이 아직 없어서 임시로 바로 플레이 진입. 아웃게임 추가되면 제거.
+#if UNITY_EDITOR
+        // 에디터에서 InGameScene을 로비 없이 직접 재생할 때 바로 플레이 진입시키는 개발 편의. 빌드는 LobbyScene부터 시작.
         SkipTitle = true;
+#endif
     }
 
     public static bool SkipTitle;
@@ -66,15 +64,6 @@ public class GameManager : MonoBehaviour
             SkipTitle = false;
             SetGameState(GameState.GamePlay);
         }
-    }
-
-    private void SetInitialSettings()
-    {
-#if UNITY_EDITOR
-        Application.targetFrameRate = -1;
-#else
-        Application.targetFrameRate = 60;
-#endif
     }
 
     private void InitializeStateActions()
@@ -95,9 +84,20 @@ public class GameManager : MonoBehaviour
         // 결과 상태도 완전 정지 — 예약된 웨이브 코루틴(WaitForSeconds)·발사·하강이 결과 화면 뒤에서
         // 계속 돌던 버그. 재시작은 RestartGame이 timeScale=1 복원 후 씬 리로드라 Exit 액션 불필요
         AddGameStateStartAction(GameState.GameOver, PauseTimeScale);
-        AddGameStateStartAction(GameState.GameClear, PauseTimeScale);
 
-
+        // 사운드 훅 — SoundManager는 영속 싱글톤이라 씬 이벤트를 구독하지 않고, 상태 전환 지점에서 직접 호출
+        AddGameStateEnterAction(GameState.GamePlay, () =>
+        {
+            // 침묵일 때만 기본 곡 시작 — 스킬 선택 복귀 같은 재진입이 보스 BGM을 덮어쓰지 않게 (실버그 2026-07-15)
+            if (SoundManager.Instance != null && !SoundManager.Instance.IsBgmPlaying)
+                SoundManager.Instance.PlayBgm(BgmClipId.InGame);
+        });
+        AddGameStateEnterAction(GameState.SkillSelection, () => SoundManager.Instance?.PlaySfx(SfxClipId.LevelUp));
+        AddGameStateEnterAction(GameState.GameOver, () =>
+        {
+            SoundManager.Instance?.StopBgm();
+            SoundManager.Instance?.PlaySfx(SfxClipId.GameOver);
+        });
     }
 
     private void InitializeCoreManagers()
@@ -118,7 +118,6 @@ public class GameManager : MonoBehaviour
         SkillManager = RegisterManager<SkillManager>(managerObjects);
         PlayerManager = RegisterManager<PlayerManager>(managerObjects);
         StatsManager = RegisterManager<StatsManager>(managerObjects);
-        // TODO: 게임별 매니저 등록 추가
 
         foreach (var manager in managers)
         {
@@ -170,9 +169,7 @@ public class GameManager : MonoBehaviour
     public void AddGameStateEnterAction(GameState state, Action action) => gameStateEnterAction[(int)state] += action;
     public void RemoveGameStateEnterAction(GameState state, Action action) => gameStateEnterAction[(int)state] -= action;
     public void AddGameStateStartAction(GameState state, Action action) => gameStateStartAction[(int)state] += action;
-    public void RemoveGameStateStartAction(GameState state, Action action) => gameStateStartAction[(int)state] -= action;
     public void AddGameStateExitAction(GameState state, Action action) => gameStateExitAction[(int)state] += action;
-    public void RemoveGameStateExitAction(GameState state, Action action) => gameStateExitAction[(int)state] -= action;
     #endregion
 
     private void PauseTimeScale()

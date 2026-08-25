@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEngine;
@@ -24,7 +25,9 @@ public static class BuildScript
         Directory.CreateDirectory("Builds");
         var options = new BuildPlayerOptions
         {
-            scenes = new[] { "Assets/Scenes/SampleScene.unity" },
+            // 씬 목록은 Build Settings(SSOT)를 그대로 읽는다 — 복사본을 들고 있다가
+            // 로비 씬 추가를 못 따라가 "로비 없는 APK"가 나올 뻔한 실사례 (검수 v5, 2026-07-23)
+            scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray(),
             locationPathName = OutputPath,
             target = BuildTarget.Android,      // 플랫폼 스위치 포함 (첫 실행은 리임포트로 수 분)
             options = BuildOptions.None,

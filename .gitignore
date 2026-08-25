@@ -28,3 +28,9 @@ Builds/
 
 # Test Runner 임시
 Assets/Resources/PerformanceTestRun*.json*
+mono_crash.*.json
+.claude/settings.local.json
+
+# Addressables 빌드 산출물 — 플레이어 빌드 중 ConfigFolder에 임시 복사됐다 사라짐 (공식 build-artifacts-included.md)
+/[Aa]ssets/AddressableAssetsData/link.xml
+/[Aa]ssets/AddressableAssetsData/link.xml.meta

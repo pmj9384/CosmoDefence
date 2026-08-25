@@ -1,0 +1,46 @@
+# EditMode 테스트 CI — push마다 GitHub이 빌린 리눅스에서 Unity를 열어 테스트 전체를 돌린다.
+# 실패하면 커밋 옆에 ❌ — "테스트가 항상 그린"을 기계가 보증하는 안전망 (리포 밖 검사원이라 게임 코드에 영향 없음)
+name: tests
+
+on:
+  push:
+    branches: [develop, master]
+  pull_request:
+  workflow_dispatch: # Actions 탭에서 수동 실행용
+
+# 테스트 결과를 커밋에 체크런으로 붙이려면 쓰기 권한 필요 (기본 토큰은 읽기 전용)
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  editmode:
+    name: EditMode 테스트
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Library 캐시 — Unity 임포트 결과물을 재사용해 2회차부터 러닝타임 절반 이하로
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-EditMode-${{ hashFiles('Packages/packages-lock.json') }}
+          restore-keys: |
+            Library-EditMode-
+
+      # 버전은 ProjectSettings/ProjectVersion.txt에서 자동 감지 → unityci/editor 도커 이미지 사용
+      - uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }} # 개인 라이선스 파일(.ulf) 내용
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          testMode: EditMode
+          githubToken: ${{ secrets.GITHUB_TOKEN }} # 커밋에 테스트 결과 체크런 표시용
+
+      # 실패 원인 추적용 — 성공/실패와 무관하게 결과 xml을 보관
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: artifacts

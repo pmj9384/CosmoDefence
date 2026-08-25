@@ -56,6 +56,22 @@ public class PlayerSkillsTests
     }
 
     [Test]
+    public void 미보유_스킬의_PassiveValue는_0()
+    {
+        var p = NewPlayer();
+        Assert.AreEqual(0f, p.PassiveValue(SkillId.TinHeart));
+    }
+
+    [Test]
+    public void PassiveValue는_현재_레벨의_수치를_반환()   // Lv2까지 올려서 검증 — Lv1 값 고정 반환 실수를 잡는다
+    {
+        var p = NewPlayer();
+        p.Acquire(SkillId.TinHeart);
+        p.Acquire(SkillId.TinHeart);
+        Assert.AreEqual(p.Table[SkillId.TinHeart].GetLevel(2).a, p.PassiveValue(SkillId.TinHeart));
+    }
+
+    [Test]
     public void Owned는_종류별로만_반환()
     {
         var p = NewPlayer();

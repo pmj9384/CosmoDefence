@@ -12,6 +12,9 @@ public class PlayerContext : MonoBehaviour
     public BallManager Balls => gameManager.BallManager;          // 발사/조준 창구
     public PlayerHealth Health => gameManager.PlayerManager.Health;   // 피격 연출용
 
+    // Shooter가 화면 중앙 정렬용으로 쓰는 값만 좁게 노출 — FieldManager 존재 자체는 모르게
+    public float FieldCenterX => (gameManager.FieldManager.LeftWall + gameManager.FieldManager.RightWall) * 0.5f;
+
     // 죽음 연출용 — 상태 머신 전체가 아니라 "GameOver 진입"만 계약으로 노출
     public void AddGameOverEnter(Action action) => gameManager.AddGameStateEnterAction(GameManager.GameState.GameOver, action);
     public void RemoveGameOverEnter(Action action)

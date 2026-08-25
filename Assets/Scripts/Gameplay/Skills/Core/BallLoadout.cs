@@ -3,15 +3,11 @@ public struct BallLoadout
 {
     public const int NormalBallDamage = 8;   // 기획서 기본값
 
-    public const string NormalSpritePath = "Sprites/Balls/Ball_Nomal_Ball";
-
     public SkillId? skill;      // null = 노멀볼
     public int level;           // 1~3 (노멀볼은 0)
     public int damage;          // 볼 기본 데미지 (SkillTable의 ballDamage 또는 노멀 8)
-    public string spritePath;   // 볼 스프라이트 (SkillTable icon 컬럼 — 하드코딩 switch 제거, 2026-07-07)
 
-    public bool IsNormal => skill == null;
 
     public static BallLoadout Normal => new BallLoadout
-        { skill = null, level = 0, damage = NormalBallDamage, spritePath = NormalSpritePath };
+    { skill = null, level = 0, damage = NormalBallDamage };
 }
